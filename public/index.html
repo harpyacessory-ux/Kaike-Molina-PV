@@ -87,6 +87,21 @@
     background-size:64px 64px;mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,#000 30%,transparent 80%);
     animation:gridDrift 24s linear infinite}
   @media(prefers-reduced-motion:reduce){.glow.a,.glow.b,.hero-bg::before,.grid-tex{animation:none}}
+  /* selos flutuantes dos marketplaces no fundo */
+  .mkt-badges{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+  .mkt-badge{position:absolute;display:inline-flex;align-items:center;gap:10px;padding:12px 20px;border-radius:100px;
+    font-family:"Hanken Grotesk",sans-serif;font-weight:700;font-size:15px;color:#eaf1ff;white-space:nowrap;
+    background:rgba(10,33,71,.5);border:1px solid rgba(109,160,255,.22);backdrop-filter:blur(6px);
+    box-shadow:0 12px 34px rgba(0,0,0,.35);opacity:.9;animation:badgeFloat 15s var(--ease) infinite}
+  .mkt-badge .bdot{width:10px;height:10px;border-radius:50%;box-shadow:0 0 12px currentColor}
+  .mkt-badge.ml{top:14%;left:4%}                 .mkt-badge.ml .bdot{background:#ffe600;color:#ffe600}
+  .mkt-badge.sh{top:70%;left:6%;animation-delay:-5s;animation-duration:18s} .mkt-badge.sh .bdot{background:#ee4d2d;color:#ee4d2d}
+  .mkt-badge.am{top:42%;left:1%;animation-delay:-9s;animation-duration:17s}  .mkt-badge.am .bdot{background:#ff9900;color:#ff9900}
+  .mkt-badge.ml2{top:86%;left:24%;opacity:.55;animation-delay:-3s;animation-duration:20s} .mkt-badge.ml2 .bdot{background:#ffe600;color:#ffe600}
+  .mkt-badge.sh2{top:6%;left:30%;opacity:.5;animation-delay:-12s;animation-duration:22s}  .mkt-badge.sh2 .bdot{background:#ee4d2d;color:#ee4d2d}
+  @keyframes badgeFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-24px)}}
+  @media(prefers-reduced-motion:reduce){.mkt-badge{animation:none}}
+  @media(max-width:900px){.mkt-badges{display:none}}
   .hero .wrap{position:relative;z-index:2;width:100%}
   .hero-grid{display:grid;grid-template-columns:1fr 1.15fr;align-items:end;gap:24px}
   .hero-photo{position:relative;align-self:flex-end;display:flex;justify-content:center;min-height:0}
@@ -363,6 +378,13 @@
 <header class="hero" id="top">
   <div class="hero-bg">
     <div class="glow a"></div><div class="glow b"></div><div class="grid-tex"></div>
+    <div class="mkt-badges" aria-hidden="true">
+      <span class="mkt-badge ml"><span class="bdot"></span>Mercado Livre</span>
+      <span class="mkt-badge sh"><span class="bdot"></span>Shopee</span>
+      <span class="mkt-badge am"><span class="bdot"></span>Amazon</span>
+      <span class="mkt-badge ml2"><span class="bdot"></span>Mercado Livre</span>
+      <span class="mkt-badge sh2"><span class="bdot"></span>Shopee</span>
+    </div>
   </div>
   <div class="wrap">
    <div class="hero-grid">
