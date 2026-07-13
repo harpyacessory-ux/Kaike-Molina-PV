@@ -336,7 +336,9 @@
   .form-msg.err{display:block;color:#ff7b7b}
 
   /* faixa banner entre secoes — card arredondado com borda de luz */
-  .brand-strip{background:var(--navy-950);padding:20px 28px 90px}
+  .brand-strip{background:var(--navy-950);padding:20px 28px 0;margin-bottom:-105px;position:relative;z-index:5}
+  .brand-strip .strip-frame{transform:translateY(0)}
+  #sobre{padding-top:210px}
   .brand-strip .strip-frame{position:relative;max-width:980px;margin:0 auto;border-radius:24px;padding:2px;overflow:hidden;
     box-shadow:0 24px 70px rgba(0,0,0,.45),0 0 50px rgba(47,109,255,.12)}
   /* luz girando na borda */
