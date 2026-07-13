@@ -335,9 +335,18 @@
   .form-msg.ok{display:block;color:#5ee0a0}
   .form-msg.err{display:block;color:#ff7b7b}
 
-  /* faixa banner entre secoes */
-  .brand-strip{line-height:0;background:var(--navy-950)}
-  .brand-strip img{width:100%;height:auto;display:block}
+  /* faixa banner entre secoes — card arredondado com borda de luz */
+  .brand-strip{background:var(--navy-950);padding:20px 28px 90px}
+  .brand-strip .strip-frame{position:relative;max-width:980px;margin:0 auto;border-radius:24px;padding:2px;overflow:hidden;
+    box-shadow:0 24px 70px rgba(0,0,0,.45),0 0 50px rgba(47,109,255,.12)}
+  /* luz girando na borda */
+  .brand-strip .strip-frame::before{content:"";position:absolute;inset:-120%;
+    background:conic-gradient(from 0deg,transparent 0 70%,rgba(109,160,255,.9) 82%,#7db2ff 86%,rgba(109,160,255,.9) 90%,transparent 100%);
+    animation:borderSpin 7s linear infinite}
+  .brand-strip .strip-inner{position:relative;border-radius:22px;overflow:hidden;background:var(--navy-900);line-height:0}
+  .brand-strip img{width:100%;height:auto;display:block;border-radius:22px}
+  @keyframes borderSpin{to{transform:rotate(360deg)}}
+  @media(prefers-reduced-motion:reduce){.brand-strip .strip-frame::before{animation:none}}
 
   /* reveal */
   .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
@@ -454,7 +463,11 @@
 
 <!-- FAIXA BANNER -->
 <div class="brand-strip">
-  <img src="public/banner-kaike.png" alt="Kaike Molina — Especialista em Marketing Digital" loading="lazy">
+  <div class="strip-frame">
+    <div class="strip-inner">
+      <img src="public/banner-kaike.png" alt="Kaike Molina — Especialista em Marketing Digital" loading="lazy">
+    </div>
+  </div>
 </div>
 
 <!-- SOBRE -->
