@@ -973,8 +973,8 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
         }
       }catch(err){ /* mesmo se o e-mail falhar, seguimos pro WhatsApp */ }
 
-      // registra conversao Lead no Meta Pixel
-      if(typeof fbq === 'function'){ fbq('track', 'Lead'); }
+      // registra conversao Lead + Contact no Meta Pixel
+      if(typeof fbq === 'function'){ fbq('track', 'Lead'); fbq('track', 'Contact'); }
 
       // 2) redireciona pro WhatsApp (abre em nova aba)
       showMsg('Tudo certo! Abrindo o WhatsApp para finalizar o contato...', true);
@@ -985,6 +985,19 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
       form.reset();
     });
   });
+
+  // Meta Pixel: ViewContent quando a secao Resultados entra na tela (dispara 1x)
+  (function(){
+    var sec = document.getElementById('resultados');
+    if(!sec || !('IntersectionObserver' in window)) return;
+    var fired = false;
+    new IntersectionObserver(function(entries, obs){
+      if(fired || !entries[0].isIntersecting) return;
+      fired = true;
+      if(typeof fbq === 'function'){ fbq('track', 'ViewContent', {content_name: 'Resultados'}); }
+      obs.disconnect();
+    }, {threshold: .4}).observe(sec);
+  })();
 </script>
 </body>
 </html>
