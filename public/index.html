@@ -973,6 +973,9 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
         }
       }catch(err){ /* mesmo se o e-mail falhar, seguimos pro WhatsApp */ }
 
+      // registra conversao Lead no Meta Pixel
+      if(typeof fbq === 'function'){ fbq('track', 'Lead'); }
+
       // 2) redireciona pro WhatsApp (abre em nova aba)
       showMsg('Tudo certo! Abrindo o WhatsApp para finalizar o contato...', true);
       window.open(waURL, '_blank');
