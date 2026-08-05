@@ -55,7 +55,7 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
     --ease:cubic-bezier(.22,.61,.36,1);
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;scroll-padding-top:100px}
   body{
     font-family:"Hanken Grotesk",sans-serif;
     background:var(--navy-950);
@@ -819,41 +819,21 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
 <script>
   const nav=document.getElementById('nav');
 
-  // rolagem suave (Lenis) com fallback nativo
-  let lenis=null;
-  if(window.Lenis){
-    lenis=new Lenis({lerp:.09,wheelMultiplier:1,smoothWheel:true});
-    (function raf(t){lenis.raf(t);requestAnimationFrame(raf)})(0);
-    document.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click',e=>{
-        const id=a.getAttribute('href');
-        if(id.length>1){const t=document.querySelector(id);if(t){e.preventDefault();lenis.scrollTo(t,{offset:-90,duration:1.2})}}
-      });
-    });
-  }
-
-  // header: compacta no scroll + esconde descendo / reaparece subindo
-  let lastY=0;
-  addEventListener('scroll',()=>{
+  // header (esconde/mostra) + parallax num unico handler com rAF (sem travar)
+  const heroImg=document.querySelector('.hero-photo img');
+  let lastY=0,ticking=false;
+  function onScroll(){
     const y=scrollY;
     nav.classList.toggle('scrolled',y>40);
     if(y>260 && y>lastY+6){nav.classList.add('nav-hidden')}
     else if(y<lastY-6 || y<=260){nav.classList.remove('nav-hidden')}
-    lastY=y;
-  },{passive:true});
-
-  // parallax sutil na foto do hero
-  const heroImg=document.querySelector('.hero-photo img');
-  if(heroImg){
-    addEventListener('scroll',()=>{
-      const y=Math.min(scrollY,700);
-      heroImg.style.transform='translateY('+(y*.12)+'px)';
-    },{passive:true});
+    if(heroImg && y<800){heroImg.style.transform='translate3d(0,'+(y*.1)+'px,0)'}
+    lastY=y;ticking=false;
   }
+  addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(onScroll)}},{passive:true});
 
   // contador animado (estilo odometer) nos numeros de estatistica
   document.querySelectorAll('.stat-solo .num .accent').forEach(el=>{
