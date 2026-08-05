@@ -951,6 +951,7 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
       if(d.length>6) out+='-'+(d.length<=10 ? d.slice(6) : d.slice(7));
       inp.value=out;
     });
+  });
 
   document.querySelectorAll('form.lead-form').forEach(function(form){
     const WHATSAPP = '5513992020409'; // número do Nicolas (DDI+DDD+número)
@@ -962,8 +963,6 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
       msgBox.textContent = text;
       msgBox.className = 'form-msg ' + (ok ? 'ok' : 'err');
     }
-
-  });
 
     form.addEventListener('submit', async function(e){
       e.preventDefault();
