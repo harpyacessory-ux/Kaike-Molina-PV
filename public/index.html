@@ -955,6 +955,7 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
 
   document.querySelectorAll('form.lead-form').forEach(function(form){
     const WHATSAPP = '5513992020409'; // número do Nicolas (DDI+DDD+número)
+    const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwDqdwtK4MEDC0tWoXTCv5WWcdBBcTSoe5BrxjgCYvt1EgEx9sfnrSyx6OIryBk2Gsl/exec'; // planilha de leads
     const btn = form.querySelector('button[type="submit"]');
     const msgBox = form.querySelector('.form-msg');
     const btnHTML = btn.innerHTML;
@@ -980,6 +981,13 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
         form.querySelector('input[name="whatsapp"]').focus();
         return;
       }
+
+      // registra o lead na planilha do Google (em paralelo, nao atrasa o WhatsApp)
+      try{
+        const sd = new FormData();
+        ['nome','whatsapp','negocio','canal','faturamento','mensagem'].forEach(function(k){ sd.append(k, (data.get(k)||'').toString()); });
+        fetch(SHEETS_URL, {method:'POST', mode:'no-cors', body: sd, keepalive: true});
+      }catch(err){ /* planilha indisponivel nao impede o lead */ }
 
       // mensagem pré-pronta pro WhatsApp
       const texto =
