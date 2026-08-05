@@ -103,16 +103,16 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
   }
   .nav-cta:hover{background:var(--blue);border-color:var(--blue);box-shadow:0 8px 24px rgba(47,109,255,.4)}
   @media(max-width:920px){
-    nav{flex-wrap:wrap;padding:12px 16px;gap:10px}
-    nav.scrolled{padding:8px 16px}
-    .navlinks{order:3;width:100%;overflow-x:auto;justify-content:flex-start;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    nav{flex-wrap:wrap;padding:10px 14px;gap:8px;row-gap:8px}
+    nav.scrolled{padding:8px 14px}
+    .brand{order:1;flex:0 1 auto;min-width:0;padding:9px 14px;border-radius:14px;backdrop-filter:none;background:rgba(7,23,48,.88)}
+    .brand-txt{font-size:16px;white-space:nowrap}
+    .brand-txt small{display:none}
+    .nav-cta{order:2;margin-left:auto;flex:0 0 auto;padding:9px 15px;font-size:12.5px;white-space:nowrap;backdrop-filter:none;background:rgba(7,23,48,.88)}
+    .navlinks{order:3;width:100%;overflow-x:auto;justify-content:flex-start;-webkit-overflow-scrolling:touch;scrollbar-width:none;backdrop-filter:none;background:rgba(7,23,48,.88)}
     .navlinks::-webkit-scrollbar{display:none}
-    .navlinks a{padding:8px 14px;font-size:13px;white-space:nowrap}
-    .brand{padding:8px 14px}
-    .brand-txt{font-size:16px}
-    .brand-txt small{font-size:10px}
-    .nav-cta{padding:9px 16px;font-size:12.5px;margin-left:auto}
-    .hero{padding-top:170px}
+    .navlinks a{padding:8px 13px;font-size:13px;white-space:nowrap}
+    .hero{padding-top:135px}
   }
 
   /* ---------- HERO ---------- */
@@ -839,13 +839,14 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
 
   // header (esconde/mostra) + parallax num unico handler com rAF (sem travar)
   const heroImg=document.querySelector('.hero-photo img');
+  const canParallax=matchMedia('(min-width:901px)').matches;
   let lastY=0,ticking=false;
   function onScroll(){
     const y=scrollY;
     nav.classList.toggle('scrolled',y>40);
     if(y>260 && y>lastY+6){nav.classList.add('nav-hidden')}
     else if(y<lastY-6 || y<=260){nav.classList.remove('nav-hidden')}
-    if(heroImg && y<800){heroImg.style.transform='translate3d(0,'+(y*.1)+'px,0)'}
+    if(canParallax && heroImg && y<800){heroImg.style.transform='translate3d(0,'+(y*.1)+'px,0)'}
     lastY=y;ticking=false;
   }
   addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(onScroll)}},{passive:true});
