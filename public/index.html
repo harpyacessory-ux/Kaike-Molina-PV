@@ -1079,6 +1079,25 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
       <input id="wm-whats" type="tel" name="whatsapp" placeholder="(00) 00000-0000" required inputmode="numeric" maxlength="16">
     </div>
     <div class="fg">
+      <label for="wm-empresa">Nome da empresa</label>
+      <input id="wm-empresa" type="text" name="empresa" placeholder="Nome da sua empresa ou loja" required>
+    </div>
+    <div class="fg">
+      <label for="wm-canal">Em qual marketplace você vende?</label>
+      <select id="wm-canal" name="canal" required>
+        <option value="" disabled selected>Selecione</option>
+        <option value="Mercado Livre">Mercado Livre</option>
+        <option value="Shopee">Shopee</option>
+        <option value="Amazon">Amazon</option>
+        <option value="Mais de um marketplace">Mais de um marketplace</option>
+        <option value="Ainda não vendo">Ainda não vendo</option>
+      </select>
+    </div>
+    <div class="fg">
+      <label for="wm-nicho">Nicho</label>
+      <input id="wm-nicho" type="text" name="nicho" placeholder="Ex.: moda, eletrônicos, suplementos..." required>
+    </div>
+    <div class="fg">
       <label for="wm-fat">Faturamento mensal no marketplace</label>
       <select id="wm-fat" name="faturamento" required>
         <option value="" disabled selected>Selecione</option>
@@ -1125,6 +1144,9 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
       const msg=mini.querySelector('.form-msg');
       const nome=(data.get('nome')||'').toString().trim();
       const whats=(data.get('whatsapp')||'').toString().trim();
+      const empresa=(data.get('empresa')||'').toString().trim();
+      const canal=(data.get('canal')||'').toString();
+      const nicho=(data.get('nicho')||'').toString().trim();
       const fat=(data.get('faturamento')||'').toString();
       const digits=whats.replace(/\D/g,'');
       if(digits.length<10||digits.length>11){
@@ -1135,12 +1157,13 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
       try{
         const sd=new FormData();
         sd.append('nome',nome);sd.append('whatsapp',whats);sd.append('faturamento',fat);
-        sd.append('negocio','');sd.append('canal','');sd.append('mensagem','[via botão flutuante]');
+        sd.append('negocio',empresa+' · Nicho: '+nicho);sd.append('canal',canal);sd.append('mensagem','[via botão flutuante]');
         fetch(SHEETS,{method:'POST',mode:'no-cors',body:sd,keepalive:true});
       }catch(err){}
       if(typeof fbq==='function'){fbq('track','Lead');fbq('track','Contact');}
       const texto='Olá Nicolas! Vim pelo seu site.%0A%0A'+
-        '*Nome:* '+nome+'%0A*WhatsApp:* '+whats+'%0A*Faturamento:* '+fat+
+        '*Nome:* '+nome+'%0A*WhatsApp:* '+whats+'%0A*Empresa:* '+empresa+
+        '%0A*Onde vendo:* '+canal+'%0A*Nicho:* '+nicho+'%0A*Faturamento:* '+fat+
         '%0A%0AQuero receber minha análise gratuita de potencial de vendas.';
       window.open('https://wa.me/'+WA+'?text='+texto.replace(/ /g,'%20'),'_blank');
       modal.classList.remove('open');
