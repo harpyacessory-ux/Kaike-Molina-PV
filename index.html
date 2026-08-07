@@ -452,6 +452,11 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
   .sol-card .ic svg{width:24px;height:24px;stroke:var(--blue-soft);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
   .sol-card h3{font-size:21px;color:#fff;margin-bottom:10px}
   .sol-card p{color:var(--muted-d);font-size:14.5px;line-height:1.6}
+  .video-quotes{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,460px));gap:26px;justify-content:center;margin:48px auto 10px}
+  .video-quote{background:#fff;border:1px solid var(--paper-line);border-radius:20px;padding:14px;box-shadow:0 18px 44px rgba(10,33,71,.07);transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+  .video-quote:hover{transform:translateY(-5px);box-shadow:0 26px 58px rgba(10,33,71,.14)}
+  .video-quote video{width:100%;display:block;border-radius:12px;background:#0a2147}
+  .video-quote .vq-cap{font-size:13.5px;font-weight:600;color:var(--muted);padding:12px 6px 4px;text-align:center}
   .wa-modal{position:fixed;inset:0;z-index:1000;background:rgba(5,15,36,.78);display:none;align-items:center;justify-content:center;padding:20px}
   .wa-modal.open{display:flex}
   .wa-mini{position:relative;width:100%;max-width:430px;margin:0;max-height:90vh;overflow-y:auto}
@@ -783,6 +788,15 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
     <p class="sec-tag reveal">Provas sociais</p>
     <h2 class="sec-title reveal d1">O que os clientes dizem.</h2>
     <p class="lead reveal d2">Parcerias construídas com confiança e resultado.</p>
+    <div class="video-quotes">
+      <div class="video-quote reveal d1">
+        <video controls preload="metadata" playsinline>
+          <source src="/depoimento-video-1.mp4" type="video/mp4">
+          Seu navegador não suporta vídeo.
+        </video>
+        <div class="vq-cap">Depoimento em vídeo · Cliente da assessoria</div>
+      </div>
+    </div>
     <div class="quotes">
         <div class="quote reveal"><div class="mark">&#8220;</div><p class="txt">Nossas vendas estão indo cada dia melhor. Vocês são preciosos!!</p><div class="who">Cliente<span>Operação de marketplace</span></div><div class="proof"><img loading="lazy" decoding="async" src="/img/p16.webp" alt="Depoimento de cliente"></div></div>
         <div class="quote reveal"><div class="mark">&#8220;</div><p class="txt">Obrigado por todo o suporte, vocês são demais. Vamos dobrar essa meta aí!</p><div class="who">Cliente<span>Operação de marketplace</span></div><div class="proof"><img loading="lazy" decoding="async" src="/img/p17.webp" alt="Depoimento de cliente"></div></div>
