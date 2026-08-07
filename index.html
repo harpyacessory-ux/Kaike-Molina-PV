@@ -346,15 +346,17 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
   .case .big .up{color:#3ddc97;font-size:18px}
   .case .sub{color:var(--muted-d);font-size:14px;margin-top:7px;line-height:1.45}
   /* ---------- QUOTES ---------- */
-  .quotes{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;margin-top:54px}
-  @media(max-width:760px){.quotes{grid-template-columns:1fr}}
-  .quote{background:#fff;border:1px solid var(--paper-line);border-radius:20px;padding:34px;box-shadow:0 18px 44px rgba(10,33,71,.07);display:flex;flex-direction:column;cursor:pointer;transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+  .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:54px}
+  @media(max-width:1000px){.quotes{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:640px){.quotes{grid-template-columns:1fr}}
+  .quote{background:#fff;border:1px solid var(--paper-line);border-radius:18px;padding:24px;box-shadow:0 18px 44px rgba(10,33,71,.07);display:flex;flex-direction:column;height:100%;cursor:pointer;transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
   .quote:hover{transform:translateY(-5px);box-shadow:0 26px 58px rgba(10,33,71,.14)}
-  .quote .mark{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:60px;line-height:.5;color:var(--blue);height:34px}
-  .quote .txt{font-size:19px;color:var(--ink);font-weight:600;margin:16px 0 18px;line-height:1.5}
+  .quote .mark{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:44px;line-height:.5;color:var(--blue);height:24px}
+  .quote .txt{font-size:15.5px;color:var(--ink);font-weight:600;margin:12px 0 14px;line-height:1.5;flex:1}
   .quote .who{font-weight:700;color:var(--ink);font-size:15px}
   .quote .who span{display:block;font-weight:500;color:var(--muted);font-size:13px;margin-top:2px}
-  .quote .proof{margin-top:22px;border-radius:13px;overflow:hidden;border:1px solid var(--paper-line);position:relative}
+  .quote .proof{margin-top:16px;border-radius:12px;overflow:hidden;border:1px solid var(--paper-line);position:relative}
+  .quote .proof img{width:100%;height:180px;object-fit:cover;object-position:top center;display:block}
   .quote .proof img{width:100%;display:block}
 
 
@@ -452,7 +454,7 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
   .sol-card .ic svg{width:24px;height:24px;stroke:var(--blue-soft);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
   .sol-card h3{font-size:21px;color:#fff;margin-bottom:10px}
   .sol-card p{color:var(--muted-d);font-size:14.5px;line-height:1.6}
-  .quote .proof video{width:100%;max-height:230px;object-fit:contain;display:block;background:#0a2147}
+  .quote .proof video{width:100%;height:180px;object-fit:contain;display:block;background:#0a2147}
   .quote.video-card{cursor:default}
   .wa-modal{position:fixed;inset:0;z-index:1000;background:rgba(5,15,36,.78);display:none;align-items:center;justify-content:center;padding:20px}
   .wa-modal.open{display:flex}
