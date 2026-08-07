@@ -452,11 +452,8 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
   .sol-card .ic svg{width:24px;height:24px;stroke:var(--blue-soft);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
   .sol-card h3{font-size:21px;color:#fff;margin-bottom:10px}
   .sol-card p{color:var(--muted-d);font-size:14.5px;line-height:1.6}
-  .video-quotes{display:flex;flex-wrap:wrap;gap:22px;justify-content:center;margin:44px auto 8px}
-  .video-quote{background:#fff;border:1px solid var(--paper-line);border-radius:16px;padding:10px;box-shadow:0 14px 36px rgba(10,33,71,.08);max-width:340px;transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
-  .video-quote:hover{transform:translateY(-4px);box-shadow:0 20px 48px rgba(10,33,71,.14)}
-  .video-quote video{width:100%;display:block;border-radius:10px;background:#0a2147}
-  .video-quote .vq-cap{font-size:13px;font-weight:600;color:var(--muted);padding:10px 6px 3px;text-align:center}
+  .quote .proof video{width:100%;display:block;background:#0a2147}
+  .quote.video-card{cursor:default}
   .wa-modal{position:fixed;inset:0;z-index:1000;background:rgba(5,15,36,.78);display:none;align-items:center;justify-content:center;padding:20px}
   .wa-modal.open{display:flex}
   .wa-mini{position:relative;width:100%;max-width:430px;margin:0;max-height:90vh;overflow-y:auto}
@@ -788,14 +785,6 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
     <p class="sec-tag reveal">Provas sociais</p>
     <h2 class="sec-title reveal d1">O que os clientes dizem.</h2>
     <p class="lead reveal d2">Parcerias construídas com confiança e resultado.</p>
-    <div class="video-quotes">
-      <div class="video-quote reveal d1">
-        <video controls preload="metadata" playsinline>
-          <source src="/depoimento-video-1.mp4" type="video/mp4">
-          Seu navegador não suporta vídeo.
-        </video>
-        <div class="vq-cap">Depoimento em vídeo · Cliente da assessoria</div>
-      </div>
     </div>
     <div class="quotes">
         <div class="quote reveal"><div class="mark">&#8220;</div><p class="txt">Nossas vendas estão indo cada dia melhor. Vocês são preciosos!!</p><div class="who">Cliente<span>Operação de marketplace</span></div><div class="proof"><img loading="lazy" decoding="async" src="/img/p16.webp" alt="Depoimento de cliente"></div></div>
@@ -803,7 +792,8 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
         <div class="quote reveal"><div class="mark">&#8220;</div><p class="txt">Depois de muito tempo, fizemos 50 envios e tivemos 50 vendas no mesmo dia. Queria agradecer a todos pela atenção!</p><div class="who">Cliente<span>Loja de auto peças · Goiânia</span></div><div class="proof"><img loading="lazy" decoding="async" src="/img/p18.webp" alt="Depoimento de cliente"></div></div>
         <div class="quote reveal"><div class="mark">&#8220;</div><p class="txt">Em menos de 15 dias trabalhando ativos no Mercado Livre, batemos mais de R$ 20 mil de faturamento. Vamos ainda mais longe!</p><div class="who">Cliente<span>Mercado Livre</span></div><div class="proof"><img loading="lazy" decoding="async" src="/img/p19.webp" alt="Depoimento de Cliente"></div></div>
         <div class="quote reveal"><div class="mark">&#8220;</div><p class="txt">1 mês de operação e +30% de aumento nas vendas em relação ao mesmo período do mês passado. Nosso principal concorrente teve queda de 6% no mesmo período — números a se aplaudir!</p><div class="who">Cliente<span>Operação de marketplace</span></div><div class="proof"><img loading="lazy" decoding="async" src="/img/p20.webp" alt="Prova social de cliente"></div></div>
-        </div>
+        <div class="quote reveal video-card"><div class="mark">&#8220;</div><p class="txt">Depoimento em vídeo — direto do cliente.</p><div class="who">Cliente<span>Criação de SaaS</span></div><div class="proof"><video controls preload="metadata" playsinline><source src="/depoimento-video-1.mp4" type="video/mp4">Seu navegador não suporta vídeo.</video></div></div>
+    </div>
   </div>
 </section>
 
