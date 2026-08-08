@@ -104,17 +104,20 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
     background:rgba(7,23,48,.6);backdrop-filter:blur(12px);
   }
   .nav-cta:hover{background:var(--blue);border-color:var(--blue);box-shadow:0 8px 24px rgba(47,109,255,.4)}
+  .menu-toggle{display:none;width:42px;height:42px;border-radius:100px;border:1px solid rgba(109,160,255,.35);background:rgba(7,23,48,.88);color:#fff;cursor:pointer;align-items:center;justify-content:center;flex-shrink:0;padding:0}
+  .menu-toggle svg{width:20px;height:20px;fill:currentColor}
   @media(max-width:920px){
-    nav{flex-wrap:wrap;padding:10px 14px;gap:8px;row-gap:8px}
+    nav{padding:10px 14px;gap:8px}
     nav.scrolled{padding:8px 14px}
-    .brand{order:1;flex:0 1 auto;min-width:0;padding:9px 14px;border-radius:14px;backdrop-filter:none;background:rgba(7,23,48,.88)}
+    .brand{flex:0 1 auto;min-width:0;padding:9px 14px;border-radius:14px;backdrop-filter:none;background:rgba(7,23,48,.88)}
     .brand-txt{font-size:16px;white-space:nowrap}
     .brand-txt small{display:none}
-    .nav-cta{order:2;margin-left:auto;flex:0 0 auto;padding:9px 15px;font-size:12.5px;white-space:nowrap;backdrop-filter:none;background:rgba(7,23,48,.88)}
-    .navlinks{order:3;width:100%;overflow-x:auto;justify-content:flex-start;-webkit-overflow-scrolling:touch;scrollbar-width:none;backdrop-filter:none;background:rgba(7,23,48,.88)}
-    .navlinks::-webkit-scrollbar{display:none}
-    .navlinks a{padding:8px 13px;font-size:13px;white-space:nowrap}
-    .hero{padding-top:135px}
+    .nav-cta{margin-left:auto;flex:0 0 auto;padding:9px 15px;font-size:12.5px;white-space:nowrap;backdrop-filter:none;background:rgba(7,23,48,.88)}
+    .menu-toggle{display:flex}
+    .navlinks{display:none;position:fixed;top:66px;right:14px;left:14px;flex-direction:column;align-items:stretch;gap:4px;padding:12px;border-radius:18px;background:rgba(7,23,48,.97);border:1px solid rgba(109,160,255,.28);box-shadow:0 24px 60px rgba(0,0,0,.55);backdrop-filter:none;z-index:60}
+    .navlinks.open{display:flex}
+    .navlinks a{padding:14px 16px;font-size:15px;font-weight:600;border-radius:12px}
+    .hero{padding-top:110px}
     .glow.a,.glow.b,.hero-bg::before,.grid-tex{animation:none}
     .hero-bg::before{filter:blur(40px)}
     .brand-strip .strip-frame::before{animation:none}
@@ -487,6 +490,9 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
     <a href="#depoimentos">Depoimentos</a>
   </div>
   <a class="nav-cta" href="#contato">Quero vender mais</a>
+  <button class="menu-toggle" id="menuToggle" type="button" aria-label="Abrir menu" aria-expanded="false">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2.2"/><circle cx="12" cy="12" r="2.2"/><circle cx="12" cy="19" r="2.2"/></svg>
+  </button>
 </nav>
 
 <!-- HERO -->
@@ -951,6 +957,25 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
 
 <script>
   const nav=document.getElementById('nav');
+
+  // menu mobile (3 pontinhos)
+  const menuToggle=document.getElementById('menuToggle');
+  const navlinksEl=document.querySelector('.navlinks');
+  if(menuToggle && navlinksEl){
+    menuToggle.addEventListener('click',function(e){
+      e.stopPropagation();
+      const open=navlinksEl.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded',open);
+    });
+    navlinksEl.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click',function(){navlinksEl.classList.remove('open');menuToggle.setAttribute('aria-expanded','false')});
+    });
+    document.addEventListener('click',function(e){
+      if(navlinksEl.classList.contains('open') && !navlinksEl.contains(e.target) && !menuToggle.contains(e.target)){
+        navlinksEl.classList.remove('open');menuToggle.setAttribute('aria-expanded','false');
+      }
+    });
+  }
 
   // header (esconde/mostra) + parallax num unico handler com rAF (sem travar)
   const heroImg=document.querySelector('.hero-photo img');
