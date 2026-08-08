@@ -545,6 +545,15 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
 
   /* HERO mobile compacto: texto, foto grande, card "vidro" sobreposto a foto e CTA logo abaixo */
   @media(max-width:900px){
+    /* espacamentos: secoes de 120px viram 52px; grids e blocos internos apertados */
+    .sec-pad{padding:52px 0}
+    .hero{min-height:auto;padding-bottom:48px}
+    .case-grid,.quotes,.edu-grid,.sites-grid,.sol-grid,.offer-grid{margin-top:30px}
+    .chips{margin-top:26px}
+    .logo-wall{margin-top:0;padding-top:34px}
+    /* banner sobreposto: overlap de -105px recalibrado para o padding menor da secao seguinte */
+    .brand-strip{margin-bottom:-52px}
+    #sobre{padding-top:72px}
     /* Diferenciais: secao completa some; a versao compacta entra dentro de A Consultoria */
     #diferenciais{display:none}
     .feats-compact{display:block;margin-top:26px;border-top:1px solid rgba(109,160,255,.16);padding-top:22px}
