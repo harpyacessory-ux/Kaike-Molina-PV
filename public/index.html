@@ -1222,6 +1222,19 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
   /* ---------- LEAD FORM: envia pro e-mail (Web3Forms) + WhatsApp ---------- */
   const PAGE_T0 = performance.now(); // anti-bot: marca o carregamento da pagina
 
+  // origem do trafego: captura UTMs/fbclid da URL e persiste na sessao (segue junto com o lead pra planilha)
+  window.LEAD_UTM = (function(){
+    try{
+      var saved = JSON.parse(sessionStorage.getItem('lead_utm')||'{}');
+      var p = new URLSearchParams(location.search);
+      ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','fbclid'].forEach(function(k){
+        var v = p.get(k); if(v) saved[k]=v;
+      });
+      sessionStorage.setItem('lead_utm', JSON.stringify(saved));
+      return saved;
+    }catch(err){ return {}; }
+  })();
+
   // mascara de telefone BR nos campos de WhatsApp
   document.querySelectorAll('input[name="whatsapp"]').forEach(inp=>{
     inp.setAttribute('inputmode','numeric');
@@ -1274,6 +1287,9 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
       try{
         const sd = new FormData();
         ['nome','whatsapp','negocio','canal','faturamento','mensagem'].forEach(function(k){ sd.append(k, (data.get(k)||'').toString()); });
+        var u = window.LEAD_UTM || {};
+        Object.keys(u).forEach(function(k){ sd.append(k, u[k]); });
+        sd.append('origem', u.utm_campaign ? (u.utm_campaign+' | '+(u.utm_content||'')) : (u.fbclid ? 'meta (fbclid)' : 'organico/direto'));
         fetch(SHEETS_URL, {method:'POST', mode:'no-cors', body: sd, keepalive: true});
       }catch(err){ /* planilha indisponivel nao impede o lead */ }
 
@@ -1290,16 +1306,18 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
       const waURL = `https://wa.me/${WHATSAPP}?text=${texto.replace(/ /g,'%20')}`;
 
       btn.disabled = true;
-      btn.textContent = 'Enviando...';
+      btn.textContent = 'Abrindo o WhatsApp...';
 
-      // 1) tenta registrar o lead no e-mail via Web3Forms
+      // 1) registra o lead no e-mail via Web3Forms em paralelo (keepalive sobrevive ao redirect;
+      //    esperar a resposta antes de abrir o WhatsApp fazia o in-app browser bloquear o pop-up)
       const key = form.querySelector('[name="access_key"]').value;
       try{
         if(key && key.indexOf('COLE_') === -1){
-          await fetch('https://api.web3forms.com/submit', {
+          fetch('https://api.web3forms.com/submit', {
             method:'POST',
             headers:{'Accept':'application/json'},
-            body: data
+            body: data,
+            keepalive: true
           });
         }
       }catch(err){ /* mesmo se o e-mail falhar, seguimos pro WhatsApp */ }
@@ -1307,13 +1325,16 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
       // registra conversao Lead + Contact no Meta Pixel
       if(typeof fbq === 'function'){ fbq('track', 'Lead'); fbq('track', 'Contact'); }
 
-      // 2) redireciona pro WhatsApp (abre em nova aba)
+      // 2) navega pro WhatsApp na mesma aba — imune a bloqueio de pop-up nos navegadores internos (Instagram/iOS)
       showMsg('Tudo certo! Abrindo o WhatsApp para finalizar o contato...', true);
-      window.open(waURL, '_blank');
-
+      const fallback = document.createElement('a');
+      fallback.href = waURL;
+      fallback.textContent = 'Se o WhatsApp não abrir, toque aqui.';
+      fallback.style.cssText = 'display:block;margin-top:6px;font-weight:700;color:inherit;text-decoration:underline';
+      msgBox.appendChild(fallback);
       btn.disabled = false;
       btn.innerHTML = btnHTML;
-      form.reset();
+      setTimeout(function(){ window.location.href = waURL; }, 350);
     });
   });
 
@@ -1422,6 +1443,9 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
         const sd=new FormData();
         sd.append('nome',nome);sd.append('whatsapp',whats);sd.append('faturamento',fat);
         sd.append('negocio',empresa);sd.append('canal',canal);sd.append('mensagem','[via botão flutuante]');
+        var u=window.LEAD_UTM||{};
+        Object.keys(u).forEach(function(k){sd.append(k,u[k]);});
+        sd.append('origem', u.utm_campaign ? (u.utm_campaign+' | '+(u.utm_content||'')) : (u.fbclid ? 'meta (fbclid)' : 'organico/direto'));
         fetch(SHEETS,{method:'POST',mode:'no-cors',body:sd,keepalive:true});
       }catch(err){}
       if(typeof fbq==='function'){fbq('track','Lead');fbq('track','Contact');}
@@ -1429,9 +1453,10 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
         '*Nome:* '+nome+'%0A*WhatsApp:* '+whats+'%0A*Empresa:* '+empresa+
         '%0A*Onde vendo:* '+canal+'%0A*Faturamento:* '+fat+
         '%0A%0AQuero receber minha análise gratuita de potencial de vendas.';
-      window.open('https://wa.me/'+WA+'?text='+texto.replace(/ /g,'%20'),'_blank');
+      // navega na mesma aba — window.open é bloqueado nos navegadores internos (Instagram/iOS)
+      var waURL='https://wa.me/'+WA+'?text='+texto.replace(/ /g,'%20');
       modal.classList.remove('open');
-      mini.reset();
+      setTimeout(function(){ window.location.href = waURL; }, 250);
     });
   })();
 </script>
