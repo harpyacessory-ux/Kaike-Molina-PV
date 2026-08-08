@@ -164,6 +164,7 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
   @keyframes marqueeSlide{from{transform:translateX(0)}to{transform:translateX(-33.333%)}}
   @media(prefers-reduced-motion:reduce){.mkt-track{animation:none}}
   @media(max-width:900px){.mkt-marquee{display:none}}
+  @media(max-width:900px) and (prefers-reduced-motion:reduce){.chips{animation:none}.chips-marquee{overflow-x:auto}}
   .hero .wrap{position:relative;z-index:2;width:100%}
   .hero-grid{display:grid;grid-template-columns:1.08fr .92fr;align-items:end;gap:40px}
   .hero-photo{order:2;position:relative;align-self:center;display:flex;justify-content:center;min-height:0}
@@ -274,6 +275,7 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
 
   /* ---------- EXPERTISE (light) ---------- */
   .chips{display:flex;flex-wrap:wrap;gap:14px;margin-top:46px}
+  .chip.dup{display:none}
   .chip{
     display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--paper-line);
     border-radius:13px;padding:15px 20px;font-weight:600;font-size:15px;color:var(--ink);
@@ -542,12 +544,13 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
     .sec-pad{padding:52px 0}
     .hero{min-height:auto;padding-bottom:48px}
     .case-grid,.quotes,.edu-grid,.sites-grid,.sol-grid,.offer-grid{margin-top:30px}
-    /* Expertise vira carrossel horizontal: 2 linhas compactas, arrasta pro lado */
-    .chips{margin-top:26px;display:grid;grid-template-rows:repeat(2,auto);grid-auto-flow:column;grid-auto-columns:max-content;
-      gap:10px;overflow-x:auto;margin-left:-28px;margin-right:-28px;padding:4px 28px 12px;
-      scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-    .chips::-webkit-scrollbar{display:none}
-    .chip{scroll-snap-align:start;white-space:nowrap;padding:11px 16px;font-size:14px}
+    /* Expertise: uma linha so que passa sozinha (marquee infinito com conteudo duplicado) */
+    .chips-marquee{overflow:hidden;margin:26px -28px 0}
+    .chips{margin-top:0;display:flex;flex-wrap:nowrap;gap:0;width:max-content;padding:4px 0 10px;
+      animation:chipsScroll 50s linear infinite}
+    .chip.dup{display:flex}
+    .chip{white-space:nowrap;padding:11px 16px;font-size:14px;margin-right:10px}
+    @keyframes chipsScroll{to{transform:translateX(-50%)}}
     .logo-wall{margin-top:0;padding-top:34px}
     /* banner sobreposto: overlap de -105px recalibrado para o padding menor da secao seguinte */
     .brand-strip{margin-bottom:-52px}
@@ -888,6 +891,7 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
     <p class="sec-tag reveal">Expertise</p>
     <h2 class="sec-title reveal d1">Especializado nas seguintes ferramentas.</h2>
     <p class="lead reveal d2">A stack que sustenta da estratégia à execução.</p>
+    <div class="chips-marquee">
     <div class="chips">
       <div class="chip reveal d1"><span class="dot"></span>Mercado Livre</div>
       <div class="chip reveal d1"><span class="dot"></span>Shopee</div>
@@ -908,6 +912,27 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
       <div class="chip reveal d3"><span class="dot"></span>Nubimetrics</div>
       <div class="chip reveal d4"><span class="dot"></span>JoomPulse</div>
       <div class="chip reveal d1"><span class="dot"></span>AvantPro</div>
+      <!-- copia para o loop infinito do marquee mobile; escondida no desktop -->
+      <div class="chip dup" aria-hidden="true"><span class="dot"></span>Mercado Livre</div>
+      <div class="chip dup" aria-hidden="true"><span class="dot"></span>Shopee</div>
+      <div class="chip dup" aria-hidden="true"><span class="dot"></span>Amazon</div>
+      <div class="chip dup" aria-hidden="true"><span class="dot"></span>Google Ads</div>
+      <div class="chip dup" aria-hidden="true"><span class="dot"></span>Meta Ads</div>
+      <div class="chip dup" aria-hidden="true"><span class="dot"></span>Shopify</div>
+      <div class="chip dup" aria-hidden="true"><span class="dot"></span>Magis5</div>
+      <div class="chip dup" aria-hidden="true"><span class="dot"></span>Bling</div>
+      <div class="chip dup" aria-hidden="true"><span class="dot"></span>Google Looker Studio</div>
+      <div class="chip dup" aria-hidden="true"><span class="dot"></span>Google Analytics</div>
+      <div class="chip dup" aria-hidden="true"><span class="dot"></span>WordPress</div>
+      <div class="chip dup" aria-hidden="true"><span class="dot"></span>CRM</div>
+      <div class="chip dup" aria-hidden="true"><span class="dot"></span>Automação & Sistemas</div>
+      <div class="chip dup" aria-hidden="true"><span class="dot"></span>Inteligência de Marketing</div>
+      <div class="chip dup" aria-hidden="true"><span class="dot"></span>Adman</div>
+      <div class="chip dup" aria-hidden="true"><span class="dot"></span>Emori</div>
+      <div class="chip dup" aria-hidden="true"><span class="dot"></span>Nubimetrics</div>
+      <div class="chip dup" aria-hidden="true"><span class="dot"></span>JoomPulse</div>
+      <div class="chip dup" aria-hidden="true"><span class="dot"></span>AvantPro</div>
+    </div>
     </div>
   </div>
 </section>
