@@ -354,6 +354,21 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
   .case-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:54px}
   @media(max-width:900px){.case-grid{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:600px){.case-grid{grid-template-columns:1fr}}
+  /* mostra 3 cases; "Ver mais" expande — CSS puro (checkbox), sem depender de JS */
+  .cases-more{position:absolute;opacity:0;pointer-events:none}
+  .cases-more:not(:checked) ~ .case-grid{position:relative}
+  .cases-more:not(:checked) ~ .case-grid .case:nth-child(n+4){display:none}
+  .cases-more:not(:checked) ~ .case-grid::after{content:"";position:absolute;left:-10px;right:-10px;bottom:-12px;height:130px;
+    background:linear-gradient(to bottom,rgba(5,15,36,0),var(--navy-950) 92%);pointer-events:none}
+  .cases-toggle-row{display:flex;justify-content:center;margin-top:-26px;position:relative;z-index:2}
+  .cases-more:checked ~ .cases-toggle-row{margin-top:30px}
+  .cases-toggle{display:inline-flex;align-items:center;gap:10px;border-radius:100px;padding:14px 30px;font-weight:600;font-size:15px;
+    color:#fff;border:1px solid rgba(109,160,255,.4);background:rgba(7,23,48,.85);cursor:pointer;transition:.3s var(--ease)}
+  .cases-toggle:hover{border-color:var(--blue);background:rgba(47,109,255,.15)}
+  .cases-toggle svg{transition:transform .3s var(--ease)}
+  .cases-more:checked ~ .cases-toggle-row .cases-toggle svg{transform:rotate(180deg)}
+  .cases-more:checked ~ .cases-toggle-row .txt-more{display:none}
+  .cases-more:not(:checked) ~ .cases-toggle-row .txt-less{display:none}
   .case{border:1px solid rgba(109,160,255,.18);border-radius:20px;overflow:hidden;background:linear-gradient(160deg,rgba(14,44,94,.55),rgba(7,23,48,.35));transition:.4s var(--ease);cursor:pointer;display:flex;flex-direction:column;height:100%}
   .case:hover{transform:translateY(-6px);border-color:rgba(109,160,255,.45);box-shadow:0 24px 50px rgba(0,0,0,.4)}
   .case .shot{background:#fff;padding:13px;display:block;position:relative}
@@ -516,7 +531,7 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
     .hero-grid .stat-solo{width:calc(100% - 16px);margin-left:auto;padding:22px 24px;gap:14px;
       background:linear-gradient(135deg,rgba(24,50,100,.9),rgba(13,32,66,.84));
       border-color:rgba(147,180,255,.34);box-shadow:0 18px 50px rgba(0,0,0,.45)}
-    .btn-g{display:none}
+    .hero-actions .btn-g{display:none}
     .btn.btn-p{width:100%;justify-content:center;padding:18px 28px;font-size:16.5px}
   }
 </style>
@@ -683,6 +698,7 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
     <p class="sec-tag reveal">Cases &amp; Resultados</p>
     <h2 class="sec-title reveal d1">Contas que já gerenciei.</h2>
     <p class="lead reveal d2">Resultados reais de operações que conduzi no Mercado Livre e na Shopee — crescimento de vendas, escala e eficiência.</p>
+    <input type="checkbox" id="casesMore" class="cases-more" aria-label="Mostrar todos os cases">
     <div class="case-grid">
         <div class="case reveal"><span class="shot"><img loading="lazy" decoding="async" src="/img/p1.webp" alt="Resultado Shopee"></span><div class="meta"><span class="tag">Shopee</span><div class="big"><span class="up">&#9650;</span>+43,98%</div><div class="sub">R$ 6.094.190 em vendas · 2.708 pedidos</div></div></div>
         <div class="case reveal"><span class="shot"><img loading="lazy" decoding="async" src="/img/p2.webp" alt="Resultado Shopee"></span><div class="meta"><span class="tag">Shopee</span><div class="big"><span class="up">&#9650;</span>+50,84%</div><div class="sub">R$ 679.257 em vendas · 2.870 pedidos</div></div></div>
@@ -699,6 +715,12 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
         <div class="case reveal"><span class="shot"><img loading="lazy" decoding="async" src="/img/p13.webp" alt="Resultado Mercado Livre"></span><div class="meta"><span class="tag">Mercado Livre</span><div class="big"><span class="up">&#9650;</span>+51,4%</div><div class="sub">R$ 138.035 em vendas · 1.530 unidades</div></div></div>
         <div class="case reveal"><span class="shot"><img loading="lazy" decoding="async" src="/img/p14.webp" alt="Resultado Mercado Livre"></span><div class="meta"><span class="tag">Mercado Livre</span><div class="big"><span class="up">&#9650;</span>+23,9%</div><div class="sub">R$ 228.354 em vendas · últimos 7 dias</div></div></div>
         <div class="case reveal"><span class="shot"><img loading="lazy" decoding="async" src="/img/p15.webp" alt="Resultado Shopee"></span><div class="meta"><span class="tag">Shopee</span><div class="big"><span class="up">&#9650;</span>+251,71%</div><div class="sub">R$ 86.032 em vendas · 1.606 pedidos</div></div></div>
+    </div>
+    <div class="cases-toggle-row">
+      <label class="cases-toggle" for="casesMore">
+        <span class="txt-more">Ver mais cases</span><span class="txt-less">Ver menos</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+      </label>
     </div>
   </div>
 </section>
