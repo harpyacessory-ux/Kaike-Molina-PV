@@ -542,6 +542,7 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
   }
 
   .feats-compact{display:none}
+  .txt-short{display:none}
 
   /* HERO mobile compacto: texto, foto grande, card "vidro" sobreposto a foto e CTA logo abaixo */
   @media(max-width:900px){
@@ -554,6 +555,9 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
     /* banner sobreposto: overlap de -105px recalibrado para o padding menor da secao seguinte */
     .brand-strip{margin-bottom:-52px}
     #sobre{padding-top:72px}
+    /* textos longos trocados por versoes curtas (Sobre) */
+    .txt-full{display:none}
+    .txt-short{display:inline}
     /* Diferenciais: secao completa some; a versao compacta entra dentro de A Consultoria */
     #diferenciais{display:none}
     .feats-compact{display:block;margin-top:26px;border-top:1px solid rgba(109,160,255,.16);padding-top:22px}
@@ -836,11 +840,11 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
       <div>
         <p class="sec-tag reveal">Sobre</p>
         <h2 class="sec-title reveal d1">Marketing orientado a dados, operação que se automatiza.</h2>
-        <p class="lead reveal d2">Construo e otimizo a presença de marcas em marketplaces unindo gestão de tráfego, análise de performance e desenvolvimento de sistemas. Meu diferencial está em enxergar o processo por trás do resultado — e automatizá-lo para que escale sem perder qualidade.</p>
+        <p class="lead reveal d2"><span class="txt-full">Construo e otimizo a presença de marcas em marketplaces unindo gestão de tráfego, análise de performance e desenvolvimento de sistemas. Meu diferencial está em enxergar o processo por trás do resultado — e automatizá-lo para que escale sem perder qualidade.</span><span class="txt-short">Presença de marcas em marketplaces com tráfego, performance e automação — um processo que escala sem perder qualidade.</span></p>
       </div>
       <div>
         <div class="about-card reveal d2"><h4>O que eu faço</h4><p>Gestão de tráfego e performance no Mercado Livre, Google Ads e Meta Ads, com foco em ROI e crescimento sustentável de vendas.</p></div>
-        <div class="about-card reveal d3"><h4>Como eu faço</h4><p>Acompanho de perto os seus concorrentes e replico o melhor da estratégia deles para o seu negócio — com mais expertise — para você ranquear no marketplace de forma saudável e competitiva. Tudo com automação de rotinas e painéis de acompanhamento com Looker Studio e Analytics.</p></div>
+        <div class="about-card reveal d3"><h4>Como eu faço</h4><p><span class="txt-full">Acompanho de perto os seus concorrentes e replico o melhor da estratégia deles para o seu negócio — com mais expertise — para você ranquear no marketplace de forma saudável e competitiva. Tudo com automação de rotinas e painéis de acompanhamento com Looker Studio e Analytics.</span><span class="txt-short">Estudo seus concorrentes e aplico o melhor da estratégia deles — com mais expertise — para você ranquear de forma competitiva, com automação e painéis de acompanhamento.</span></p></div>
         <div class="about-card reveal d4"><h4>Para quem eu faço</h4><p>Pra quem já empreende ou qualquer um que deseja empreender dentro do mundo dos marketplaces.</p></div>
       </div>
     </div>
