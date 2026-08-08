@@ -383,16 +383,8 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
     .quotes-more:checked ~ .quotes-toggle-row .txt-more{display:none}
     .quotes-more:not(:checked) ~ .quotes-toggle-row .txt-less{display:none}
     .quotes-more:checked ~ .quotes-toggle-row .cases-toggle svg{transform:rotate(180deg)}
-    /* formacao & certificacoes: mesmo padrao */
-    .edu-toggle-row{display:flex;margin-top:-26px}
-    .edu-more:checked ~ .edu-toggle-row{margin-top:30px}
-    .edu-more:not(:checked) ~ .edu-grid{position:relative}
-    .edu-more:not(:checked) ~ .edu-grid .edu:nth-child(n+4){display:none}
-    .edu-more:not(:checked) ~ .edu-grid::after{content:"";position:absolute;left:-10px;right:-10px;bottom:-12px;height:110px;
-      background:linear-gradient(to bottom,rgba(238,242,248,0),var(--paper) 92%);pointer-events:none}
-    .edu-more:checked ~ .edu-toggle-row .txt-more{display:none}
-    .edu-more:not(:checked) ~ .edu-toggle-row .txt-less{display:none}
-    .edu-more:checked ~ .edu-toggle-row .cases-toggle svg{transform:rotate(180deg)}
+    /* formacao & certificacoes: escondida no mobile */
+    #formacao{display:none}
   }
   .case{border:1px solid rgba(109,160,255,.18);border-radius:20px;overflow:hidden;background:linear-gradient(160deg,rgba(14,44,94,.55),rgba(7,23,48,.35));transition:.4s var(--ease);cursor:pointer;display:flex;flex-direction:column;height:100%}
   .case:hover{transform:translateY(-6px);border-color:rgba(109,160,255,.45);box-shadow:0 24px 50px rgba(0,0,0,.4)}
