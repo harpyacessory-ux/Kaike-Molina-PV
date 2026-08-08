@@ -369,6 +369,21 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
   .cases-more:checked ~ .cases-toggle-row .cases-toggle svg{transform:rotate(180deg)}
   .cases-more:checked ~ .cases-toggle-row .txt-more{display:none}
   .cases-more:not(:checked) ~ .cases-toggle-row .txt-less{display:none}
+  /* provas sociais: mesmo padrao, mas SO no mobile (<=900px) e com degrade na cor clara da secao */
+  .quotes-toggle-row{display:none;justify-content:center;position:relative;z-index:2}
+  .light .cases-toggle{color:var(--ink);border-color:rgba(47,109,255,.45);background:rgba(255,255,255,.85)}
+  .light .cases-toggle:hover{border-color:var(--blue);background:rgba(47,109,255,.08)}
+  @media(max-width:900px){
+    .quotes-toggle-row{display:flex;margin-top:-26px}
+    .quotes-more:checked ~ .quotes-toggle-row{margin-top:30px}
+    .quotes-more:not(:checked) ~ .quotes{position:relative}
+    .quotes-more:not(:checked) ~ .quotes .quote:nth-child(n+4){display:none}
+    .quotes-more:not(:checked) ~ .quotes::after{content:"";position:absolute;left:-10px;right:-10px;bottom:-12px;height:130px;
+      background:linear-gradient(to bottom,rgba(238,242,248,0),var(--paper) 92%);pointer-events:none}
+    .quotes-more:checked ~ .quotes-toggle-row .txt-more{display:none}
+    .quotes-more:not(:checked) ~ .quotes-toggle-row .txt-less{display:none}
+    .quotes-more:checked ~ .quotes-toggle-row .cases-toggle svg{transform:rotate(180deg)}
+  }
   .case{border:1px solid rgba(109,160,255,.18);border-radius:20px;overflow:hidden;background:linear-gradient(160deg,rgba(14,44,94,.55),rgba(7,23,48,.35));transition:.4s var(--ease);cursor:pointer;display:flex;flex-direction:column;height:100%}
   .case:hover{transform:translateY(-6px);border-color:rgba(109,160,255,.45);box-shadow:0 24px 50px rgba(0,0,0,.4)}
   .case .shot{background:#fff;padding:13px;display:block;position:relative}
@@ -863,7 +878,7 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
     <p class="sec-tag reveal">Provas sociais</p>
     <h2 class="sec-title reveal d1">O que os clientes dizem.</h2>
     <p class="lead reveal d2">Parcerias construídas com confiança e resultado.</p>
-    
+    <input type="checkbox" id="quotesMore" class="cases-more quotes-more" aria-label="Mostrar todos os depoimentos">
     <div class="quotes">
         <div class="quote reveal"><div class="mark">&#8220;</div><p class="txt">Nossas vendas estão indo cada dia melhor. Vocês são preciosos!!</p><div class="who">Cliente<span>Operação de marketplace</span></div><div class="proof"><img loading="lazy" decoding="async" src="/img/p16.webp" alt="Depoimento de cliente"></div></div>
         <div class="quote reveal"><div class="mark">&#8220;</div><p class="txt">Obrigado por todo o suporte, vocês são demais. Vamos dobrar essa meta aí!</p><div class="who">Cliente<span>Operação de marketplace</span></div><div class="proof"><img loading="lazy" decoding="async" src="/img/p17.webp" alt="Depoimento de cliente"></div></div>
@@ -871,6 +886,12 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
         <div class="quote reveal"><div class="mark">&#8220;</div><p class="txt">Em menos de 15 dias trabalhando ativos no Mercado Livre, batemos mais de R$ 20 mil de faturamento. Vamos ainda mais longe!</p><div class="who">Cliente<span>Mercado Livre</span></div><div class="proof"><img loading="lazy" decoding="async" src="/img/p19.webp" alt="Depoimento de Cliente"></div></div>
         <div class="quote reveal"><div class="mark">&#8220;</div><p class="txt">1 mês de operação e +30% de aumento nas vendas em relação ao mesmo período do mês passado. Nosso principal concorrente teve queda de 6% no mesmo período — números a se aplaudir!</p><div class="who">Cliente<span>Operação de marketplace</span></div><div class="proof"><img loading="lazy" decoding="async" src="/img/p20.webp" alt="Prova social de cliente"></div></div>
         <div class="quote reveal video-card"><div class="mark">&#8220;</div><p class="txt">Da ideia ao sistema no ar: este cliente conta, em primeira mão, como foi criar o SaaS dele com a gente. Aperta o play e ouve direto da fonte. ▶️</p><div class="who">Cliente<span>Criação de SaaS</span></div><div class="proof"><video controls preload="none" playsinline poster="/video-poster-1.webp"><source src="/depoimento-video-1.mp4" type="video/mp4">Seu navegador não suporta vídeo.</video></div></div>
+    </div>
+    <div class="quotes-toggle-row">
+      <label class="cases-toggle" for="quotesMore">
+        <span class="txt-more">Ver mais depoimentos</span><span class="txt-less">Ver menos</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+      </label>
     </div>
   </div>
 </section>
