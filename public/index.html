@@ -542,7 +542,12 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
     .sec-pad{padding:52px 0}
     .hero{min-height:auto;padding-bottom:48px}
     .case-grid,.quotes,.edu-grid,.sites-grid,.sol-grid,.offer-grid{margin-top:30px}
-    .chips{margin-top:26px}
+    /* Expertise vira carrossel horizontal: 2 linhas compactas, arrasta pro lado */
+    .chips{margin-top:26px;display:grid;grid-template-rows:repeat(2,auto);grid-auto-flow:column;grid-auto-columns:max-content;
+      gap:10px;overflow-x:auto;margin-left:-28px;margin-right:-28px;padding:4px 28px 12px;
+      scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .chips::-webkit-scrollbar{display:none}
+    .chip{scroll-snap-align:start;white-space:nowrap;padding:11px 16px;font-size:14px}
     .logo-wall{margin-top:0;padding-top:34px}
     /* banner sobreposto: overlap de -105px recalibrado para o padding menor da secao seguinte */
     .brand-strip{margin-bottom:-52px}
