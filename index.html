@@ -107,17 +107,17 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
   .menu-toggle{display:none;width:42px;height:42px;border-radius:100px;border:1px solid rgba(109,160,255,.35);background:rgba(7,23,48,.88);color:#fff;cursor:pointer;align-items:center;justify-content:center;flex-shrink:0;padding:0}
   .menu-toggle svg{width:20px;height:20px;fill:currentColor}
   @media(max-width:920px){
-    nav{padding:10px 14px;gap:8px}
+    nav{padding:10px 14px;gap:8px;justify-content:flex-start}
     nav.scrolled{padding:8px 14px}
-    .brand{flex:0 1 auto;min-width:0;padding:9px 14px;border-radius:14px;backdrop-filter:none;background:rgba(7,23,48,.88)}
-    .brand-txt{font-size:16px;white-space:nowrap}
-    .brand-txt small{display:none}
-    .nav-cta{margin-left:auto;flex:0 0 auto;padding:9px 15px;font-size:12.5px;white-space:nowrap;backdrop-filter:none;background:rgba(7,23,48,.88)}
+    .brand{display:none}
+    .nav-cta{display:none}
     .menu-toggle{display:flex}
-    .navlinks{display:none;position:fixed;top:66px;right:14px;left:14px;flex-direction:column;align-items:stretch;gap:4px;padding:12px;border-radius:18px;background:rgba(7,23,48,.97);border:1px solid rgba(109,160,255,.28);box-shadow:0 24px 60px rgba(0,0,0,.55);backdrop-filter:none;z-index:60}
-    .navlinks.open{display:flex}
-    .navlinks a{padding:14px 16px;font-size:15px;font-weight:600;border-radius:12px}
-    .hero{padding-top:110px}
+    .navlinks{display:flex;position:fixed;top:0;left:0;bottom:0;width:min(78vw,320px);flex-direction:column;align-items:stretch;justify-content:flex-start;gap:6px;padding:86px 16px 24px;border-radius:0 22px 22px 0;background:rgba(7,23,48,.98);border:0;border-right:1px solid rgba(109,160,255,.28);box-shadow:24px 0 60px rgba(0,0,0,.55);backdrop-filter:none;z-index:60;
+      transform:translateX(-105%);visibility:hidden;transition:transform .35s var(--ease),visibility .35s}
+    .navlinks.open{transform:translateX(0);visibility:visible}
+    .navlinks::before{content:"Nicolas Tasso";position:absolute;top:30px;left:20px;font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:20px;color:#fff}
+    .navlinks a{padding:15px 18px;font-size:15.5px;font-weight:600;border-radius:12px}
+    .hero{padding-top:100px}
     .glow.a,.glow.b,.hero-bg::before,.grid-tex{animation:none}
     .hero-bg::before{filter:blur(40px)}
     .brand-strip .strip-frame::before{animation:none}
