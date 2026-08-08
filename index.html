@@ -20,16 +20,23 @@
 <meta name="facebook-domain-verification" content="c8k7831r2g749o9knlx6d79ko4e782" />
 <!-- Meta Pixel Code -->
 <script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+!function(f){if(f.fbq)return;var n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[]}(window);
 fbq('init', '1557904942445515');
 fbq('track', 'PageView');
+(function(){
+  var done=false;
+  function load(){if(done)return;done=true;
+    var t=document.createElement('script');t.async=true;
+    t.src='https://connect.facebook.net/en_US/fbevents.js';
+    document.head.appendChild(t);}
+  if(document.readyState==='complete'){setTimeout(load,600)}
+  else{window.addEventListener('load',function(){setTimeout(load,600)})}
+  ['scroll','click','touchstart'].forEach(function(ev){
+    window.addEventListener(ev,load,{once:true,passive:true});
+  });
+})();
 </script>
 <noscript><img loading="lazy" decoding="async" height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
@@ -37,8 +44,9 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
 <!-- End Meta Pixel Code -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap"></noscript>
+<link rel="preconnect" href="https://connect.facebook.net" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap"></noscript>
 <style>
   :root{
     --navy-950:#050f24;
