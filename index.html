@@ -541,8 +541,19 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
     .zoom{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(8,20,45,.92)}
   }
 
+  .feats-compact{display:none}
+
   /* HERO mobile compacto: texto, foto grande, card "vidro" sobreposto a foto e CTA logo abaixo */
   @media(max-width:900px){
+    /* Diferenciais: secao completa some; a versao compacta entra dentro de A Consultoria */
+    #diferenciais{display:none}
+    .feats-compact{display:block;margin-top:26px;border-top:1px solid rgba(109,160,255,.16);padding-top:22px}
+    .fc-title{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-soft);font-weight:700;margin-bottom:12px}
+    .fc-item{display:flex;gap:14px;padding:10px 0}
+    .fc-item+.fc-item{border-top:1px solid rgba(109,160,255,.1)}
+    .fc-item .idx{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;color:var(--blue-soft);font-size:15px;margin-top:2px}
+    .fc-item h4{color:#fff;font-size:15.5px;margin-bottom:3px}
+    .fc-item p{color:var(--muted-d);font-size:13.5px;line-height:1.5}
     .hero-grid{gap:0}
     .hero-copy{display:contents}
     .eyebrow{margin-bottom:14px}
@@ -708,6 +719,14 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
         <h3>Estratégia personalizada</h3>
         <p>Cada tipo de negócio é diferente. Monto um plano sob medida para o seu momento, sem receita de bolo.</p>
       </div>
+    </div>
+    <!-- Diferenciais em versao compacta — aparece SO no mobile (a secao completa some la embaixo) -->
+    <div class="feats-compact reveal d2">
+      <p class="fc-title">O que me coloca à frente</p>
+      <div class="fc-item"><span class="idx">01</span><div><h4>Automação de processos</h4><p>Elimino o trabalho repetitivo com automações, liberando tempo para o que gera receita.</p></div></div>
+      <div class="fc-item"><span class="idx">02</span><div><h4>Desenvolvimento de sistemas</h4><p>Integro sistemas que conectam e-commerce e marketplaces, como Shopify e Magis5.</p></div></div>
+      <div class="fc-item"><span class="idx">03</span><div><h4>Performance em escala</h4><p>Mais de 800 contas gerenciadas com otimização contínua e crescimento de ROI.</p></div></div>
+      <div class="fc-item"><span class="idx">04</span><div><h4>Projetos com grandes marcas</h4><p>Projetos para marcas de referência, com integração e operação de lojas de ponta a ponta.</p></div></div>
     </div>
     <div class="reveal d3" style="margin-top:36px">
       <a class="btn btn-p" href="#contato">Quero uma consultoria
