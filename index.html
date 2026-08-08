@@ -37,7 +37,8 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
 <!-- End Meta Pixel Code -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap"></noscript>
 <style>
   :root{
     --navy-950:#050f24;
@@ -114,6 +115,9 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
     .navlinks::-webkit-scrollbar{display:none}
     .navlinks a{padding:8px 13px;font-size:13px;white-space:nowrap}
     .hero{padding-top:135px}
+    .glow.a,.glow.b,.hero-bg::before,.grid-tex{animation:none}
+    .hero-bg::before{filter:blur(40px)}
+    .brand-strip .strip-frame::before{animation:none}
   }
 
   /* ---------- HERO ---------- */
@@ -500,7 +504,7 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
   <div class="wrap">
    <div class="hero-grid">
     <div class="hero-photo reveal">
-      <img src="/nicolas.webp" alt="Nicolas Tasso — especialista em marketplaces" onerror="this.closest('.hero-grid').style.gridTemplateColumns='1fr';this.parentElement.style.display='none'">
+      <img src="/nicolas.webp" fetchpriority="high" alt="Nicolas Tasso — especialista em marketplaces" onerror="this.closest('.hero-grid').style.gridTemplateColumns='1fr';this.parentElement.style.display='none'">
     </div>
     <div class="hero-copy">
     <p class="eyebrow reveal">Consultoria em Mercado Livre · Shopee · Amazon</p>
@@ -794,7 +798,7 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
         <div class="quote reveal"><div class="mark">&#8220;</div><p class="txt">Depois de muito tempo, fizemos 50 envios e tivemos 50 vendas no mesmo dia. Queria agradecer a todos pela atenção!</p><div class="who">Cliente<span>Loja de auto peças · Goiânia</span></div><div class="proof"><img loading="lazy" decoding="async" src="/img/p18.webp" alt="Depoimento de cliente"></div></div>
         <div class="quote reveal"><div class="mark">&#8220;</div><p class="txt">Em menos de 15 dias trabalhando ativos no Mercado Livre, batemos mais de R$ 20 mil de faturamento. Vamos ainda mais longe!</p><div class="who">Cliente<span>Mercado Livre</span></div><div class="proof"><img loading="lazy" decoding="async" src="/img/p19.webp" alt="Depoimento de Cliente"></div></div>
         <div class="quote reveal"><div class="mark">&#8220;</div><p class="txt">1 mês de operação e +30% de aumento nas vendas em relação ao mesmo período do mês passado. Nosso principal concorrente teve queda de 6% no mesmo período — números a se aplaudir!</p><div class="who">Cliente<span>Operação de marketplace</span></div><div class="proof"><img loading="lazy" decoding="async" src="/img/p20.webp" alt="Prova social de cliente"></div></div>
-        <div class="quote reveal video-card"><div class="mark">&#8220;</div><p class="txt">Da ideia ao sistema no ar: este cliente conta, em primeira mão, como foi criar o SaaS dele com a gente. Aperta o play e ouve direto da fonte. ▶️</p><div class="who">Cliente<span>Criação de SaaS</span></div><div class="proof"><video controls preload="metadata" playsinline><source src="/depoimento-video-1.mp4" type="video/mp4">Seu navegador não suporta vídeo.</video></div></div>
+        <div class="quote reveal video-card"><div class="mark">&#8220;</div><p class="txt">Da ideia ao sistema no ar: este cliente conta, em primeira mão, como foi criar o SaaS dele com a gente. Aperta o play e ouve direto da fonte. ▶️</p><div class="who">Cliente<span>Criação de SaaS</span></div><div class="proof"><video controls preload="none" playsinline><source src="/depoimento-video-1.mp4" type="video/mp4">Seu navegador não suporta vídeo.</video></div></div>
     </div>
   </div>
 </section>
