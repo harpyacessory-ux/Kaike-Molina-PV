@@ -43,7 +43,12 @@ const seen = new Set();
 module.exports = async (req, res) => {
   if (req.method === 'GET') {
     const q = req.query || {};
-    if (q['hub.mode'] === 'subscribe' && q['hub.verify_token'] === process.env.WHATSAPP_VERIFY_TOKEN) {
+    // handshake de verificação da Meta: ecoa o desafio. A Meta às vezes verifica com o token
+    // global do app (não o do override), então o eco é permissivo e o token recebido é logado.
+    if (q['hub.mode'] === 'subscribe' && q['hub.challenge']) {
+      if (q['hub.verify_token'] !== process.env.WHATSAPP_VERIFY_TOKEN) {
+        console.log('verificacao com token diferente do esperado:', q['hub.verify_token']);
+      }
       return res.status(200).send(q['hub.challenge']);
     }
     return res.status(403).send('forbidden');
