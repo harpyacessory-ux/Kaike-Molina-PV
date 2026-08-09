@@ -78,18 +78,52 @@ module.exports = async (req, res) => {
 
     const now = Date.now();
     let chat = chats.get(from);
-    if (!chat || now - chat.t > 2 * 60 * 60 * 1000) chat = { turns: [] };
+    if (!chat || now - chat.t > 2 * 60 * 60 * 1000) {
+      chat = { turns: [], full: [], nome: '', criadoEm: null, status: null };
+      // sem histórico em RAM: tenta hidratar do Blob (falha aqui não impede a resposta)
+      try {
+        const lead = await blobGet('leads/' + from + '.json');
+        if (lead && Array.isArray(lead.turns)) {
+          chat.full = lead.turns.slice();
+          // só os últimos 12 turns vão para o Claude, e sem o campo t
+          chat.turns = lead.turns.slice(-12).map(function (t) { return { role: t.role, content: t.content }; });
+          chat.nome = lead.nome || '';
+          chat.criadoEm = lead.criadoEm || null;
+          chat.status = lead.status || null;
+        }
+      } catch (e) { console.error('blob hydrate fail:', e && e.message); }
+    }
     chat.t = now;
     chat.turns.push({ role: 'user', content: texto });
     chat.turns = chat.turns.slice(-12);
+    chat.full.push({ role: 'user', content: texto, t: now });
 
     const resposta = await claude(chat.turns, nome);
     chat.turns.push({ role: 'assistant', content: resposta });
+    chat.full.push({ role: 'assistant', content: resposta, t: Date.now() });
+    if (/humano|atendente|pessoa de verdade/i.test(texto) || /especialista|assumir|equipe (vai|entra)/i.test(resposta)) chat.status = 'qualificado';
+    else if (!chat.status) chat.status = 'em_conversa';
     chats.set(from, chat);
     if (chats.size > 500) chats.clear();
 
     await markRead(msg.id);
     await sendText(from, resposta);
+
+    // persiste no Blob depois de responder — falha de blob NUNCA impede a resposta
+    try {
+      const agora = Date.now();
+      if (!chat.criadoEm) chat.criadoEm = agora;
+      await blobPut('leads/' + from + '.json', {
+        id: from,
+        nome: nome || chat.nome || '',
+        turns: chat.full,
+        criadoEm: chat.criadoEm,
+        atualizadoEm: agora,
+        status: chat.status
+      });
+      await blobPut('meta/activity.json', { t: agora, ultimo: from });
+    } catch (e) { console.error('blob persist fail:', e && e.message); }
+
     console.log(JSON.stringify({ lead: from, nome, msg: texto, resposta }));
     return res.status(200).json({ ok: true });
   } catch (e) {
@@ -144,3 +178,9 @@ async function markRead(messageId) {
     });
   } catch (e) { /* leitura é cosmética; não interrompe o fluxo */ }
 }
+
+// ---- memória persistente no Vercel Blob (sobrevive a instâncias frias) ----
+const PFX = 'crm-' + process.env.CRM_PREFIX;
+async function blobPut(path, obj){ const r = await fetch('https://blob.vercel-storage.com/' + PFX + '/' + path, {method:'PUT', headers:{'Authorization':'Bearer '+process.env.BLOB_READ_WRITE_TOKEN,'x-api-version':'7','content-type':'application/json','x-add-random-suffix':'0'}, body: JSON.stringify(obj)}); if(!r.ok) throw new Error('blob put '+r.status); return r.json(); }
+async function blobList(prefix){ const r = await fetch('https://blob.vercel-storage.com/?prefix=' + encodeURIComponent(PFX + '/' + prefix) + '&limit=1000', {headers:{'Authorization':'Bearer '+process.env.BLOB_READ_WRITE_TOKEN,'x-api-version':'7'}}); if(!r.ok) throw new Error('blob list '+r.status); const d = await r.json(); return d.blobs || []; }
+async function blobGet(path){ const bs = await blobList(path); if(!bs.length) return null; try{ const r = await fetch(bs[0].url + '?t=' + Date.now(), {cache:'no-store'}); if(!r.ok) return null; return await r.json(); }catch(e){ return null; } }
