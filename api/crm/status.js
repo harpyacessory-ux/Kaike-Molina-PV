@@ -4,6 +4,7 @@
 
 const GRAPH = 'https://graph.facebook.com/v21.0';
 const ACCOUNT = 'act_1952702155392886';
+const IG_USER = '17841464695351184';
 const MODEL = 'claude-haiku-4-5-20251001';
 
 const PFX = 'crm-' + process.env.CRM_PREFIX;
@@ -64,6 +65,31 @@ async function checarIa(){
   }
 }
 
+async function checarInstagram(){
+  try {
+    const r = await fetch(GRAPH + '/' + IG_USER + '?fields=username,followers_count,media_count', {
+      headers: { 'Authorization': 'Bearer ' + process.env.ADS_TOKEN }
+    });
+    const d = await r.json();
+    if (!r.ok || !d.username) {
+      return { ok: false, detalhe: (d && d.error && d.error.message) || ('erro HTTP ' + r.status) };
+    }
+    // perfil acessível; confirma se os posts também estão liberados
+    const m = await fetch(GRAPH + '/' + IG_USER + '/media?fields=id&limit=1', {
+      headers: { 'Authorization': 'Bearer ' + process.env.ADS_TOKEN }
+    });
+    if (!m.ok) {
+      return {
+        ok: false,
+        detalhe: '@' + d.username + ' vinculado, mas sem permissão para ler os posts — falta instagram_basic e instagram_manage_insights no token.'
+      };
+    }
+    return { ok: true, detalhe: '@' + d.username + ' — ' + (d.followers_count || 0) + ' seguidores, ' + (d.media_count || 0) + ' posts' };
+  } catch (e) {
+    return { ok: false, detalhe: e.message };
+  }
+}
+
 async function checarArmazenamento(){
   try {
     const meta = await blobGet('meta/activity.json');
@@ -80,11 +106,12 @@ module.exports = async (req, res) => {
     return res.status(401).json({ error: 'unauthorized' });
   }
 
-  const [whatsapp, anuncios, ia, armazenamento] = await Promise.all([
+  const [whatsapp, anuncios, ia, armazenamento, instagram] = await Promise.all([
     checarWhatsapp(),
     checarAnuncios(),
     checarIa(),
-    checarArmazenamento()
+    checarArmazenamento(),
+    checarInstagram()
   ]);
 
   return res.status(200).json({
@@ -92,7 +119,7 @@ module.exports = async (req, res) => {
     anuncios,
     ia,
     armazenamento,
-    instagram: { ok: false, detalhe: 'Não conectado — o robô atende apenas WhatsApp. Respostas a comentários do Instagram exigem integração adicional (fase 2).' },
+    instagram,
     geradoEm: Date.now()
   });
 };

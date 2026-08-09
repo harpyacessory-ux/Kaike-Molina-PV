@@ -275,6 +275,7 @@
     <button class="aba-btn" data-tab="leads">Leads</button>
     <button class="aba-btn" data-tab="contatos">Contatos</button>
     <button class="aba-btn" data-tab="tarefas">Tarefas</button>
+    <button class="aba-btn" data-tab="instagram">Instagram</button>
     <button class="aba-btn" data-tab="robo">Robô</button>
   </nav>
 </header>
@@ -287,6 +288,7 @@
   <section class="tab" id="tab-funil"><div id="funilConteudo"></div></section>
   <section class="tab" id="tab-contatos"><div id="contatosConteudo"></div></section>
   <section class="tab" id="tab-tarefas"><div id="tarefasConteudo"></div></section>
+  <section class="tab" id="tab-instagram"><div id="instagramConteudo"></div></section>
 </main>
 
 <script>
@@ -299,7 +301,7 @@
   var abaAtiva = 'visao';
   var dadosInsights = null, dadosStatus = null, dadosLeads = null;
   var leadSelecionado = null;
-  var carregouAba = { visao:false, recs:false, leads:false, robo:false, funil:false, contatos:false, tarefas:false };
+  var carregouAba = { visao:false, recs:false, leads:false, robo:false, funil:false, contatos:false, tarefas:false, instagram:false };
 
   var $ = function(id){ return document.getElementById(id); };
 
@@ -411,7 +413,7 @@
     try{ localStorage.removeItem('panel_key'); }catch(e){}
     dadosInsights = dadosStatus = dadosLeads = null;
     leadSelecionado = null;
-    carregouAba = { visao:false, recs:false, leads:false, robo:false, funil:false, contatos:false, tarefas:false };
+    carregouAba = { visao:false, recs:false, leads:false, robo:false, funil:false, contatos:false, tarefas:false, instagram:false };
     setDot(null);
     mostrarLogin(msgErro || '');
   }
@@ -997,5 +999,6 @@
 <script src="/crm-ui/funil.js"></script>
 <script src="/crm-ui/contatos.js"></script>
 <script src="/crm-ui/tarefas.js"></script>
+<script src="/crm-ui/instagram.js"></script>
 </body>
 </html>
