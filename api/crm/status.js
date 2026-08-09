@@ -74,6 +74,7 @@ async function checarArmazenamento(){
 }
 
 module.exports = async (req, res) => {
+  if (cors(req, res)) return;
   if (req.method !== 'GET') return res.status(405).json({ error: 'método não permitido' });
   if (!req.headers['x-panel-key'] || req.headers['x-panel-key'] !== process.env.PANEL_KEY) {
     return res.status(401).json({ error: 'unauthorized' });
@@ -95,3 +96,17 @@ module.exports = async (req, res) => {
     geradoEm: Date.now()
   });
 };
+
+// CORS: permite o CRM Harpy (e dev local) consumir a API de outro domínio; trata o preflight
+function cors(req, res) {
+  const origin = req.headers.origin || '';
+  if (/^https:\/\/(crm-harpy\.vercel\.app|www\.nicolastasso\.site)$/.test(origin) || /^http:\/\/localhost:\d+$/.test(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Vary', 'Origin');
+    res.setHeader('Access-Control-Allow-Headers', 'content-type, x-panel-key');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Max-Age', '86400');
+  }
+  if (req.method === 'OPTIONS') { res.status(204).end(); return true; }
+  return false;
+}
