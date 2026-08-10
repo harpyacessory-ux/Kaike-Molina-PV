@@ -52,30 +52,36 @@
     style.setAttribute('data-mod', 'tarefas');
     style.textContent =
       '.tf-form{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch;margin-bottom:12px}' +
-      '.tf-form input[type=text]{flex:1 1 160px;min-width:0;background:#050f24;border:1px solid #0e2c5e;border-radius:8px;color:#e2e8f0;padding:9px 12px;font-size:14px;outline:none}' +
-      '.tf-form input[type=date]{flex:0 1 150px;background:#050f24;border:1px solid #0e2c5e;border-radius:8px;color:#e2e8f0;padding:8px 10px;font-size:13px;outline:none;color-scheme:dark}' +
-      '.tf-form input:focus{border-color:#2f6dff}' +
-      '.tf-form button{flex:0 0 auto}' +
-      '.tf-contador{color:#94a3b8;font-size:13px;margin:0 0 10px 2px}' +
-      '.tf-contador .tf-atrasadas-on{color:#ef4444;font-weight:600}' +
+      '.tf-form input[type=text]{flex:1 1 160px;min-width:0;background:var(--bg2,#0A1230);border:1px solid var(--borda,#1E2B5A);border-radius:10px;color:var(--texto,#F1F5FF);padding:10px 12px;font-size:14px;outline:none;transition:border-color .18s ease,box-shadow .18s ease}' +
+      '.tf-form input[type=date]{flex:0 1 150px;background:var(--bg2,#0A1230);border:1px solid var(--borda,#1E2B5A);border-radius:10px;color:var(--texto,#F1F5FF);padding:9px 10px;font-size:13px;outline:none;color-scheme:dark;transition:border-color .18s ease,box-shadow .18s ease}' +
+      '.tf-form input::placeholder{color:var(--cinza,#5C6B95)}' +
+      '.tf-form input:focus{border-color:var(--azul,#2E6BFF);box-shadow:0 0 0 2px rgba(46,107,255,.22)}' +
+      '.tf-form button{flex:0 0 auto;border-radius:10px;transition:filter .18s ease,border-color .18s ease}' +
+      '.tf-contador{color:var(--texto2,#9AAAD0);font-size:13px;margin:0 0 10px 2px}' +
+      '.tf-contador .tf-atrasadas-on{color:var(--vermelho-claro,#FF4767);font-weight:600}' +
       '.tf-lista{list-style:none;margin:0;padding:0}' +
-      '.tf-item{display:flex;align-items:flex-start;gap:10px;background:#0a2147;border:1px solid #0e2c5e;border-radius:10px;padding:10px 12px;margin-bottom:8px}' +
-      '.tf-item input[type=checkbox]{width:18px;height:18px;margin-top:2px;accent-color:#22c55e;cursor:pointer;flex:0 0 auto}' +
+      '.tf-item{display:flex;align-items:flex-start;gap:10px;background:var(--card,#0E1738);border:1px solid var(--borda,#1E2B5A);border-radius:14px;padding:11px 12px;margin-bottom:8px;transition:border-color .18s ease,background-color .18s ease,opacity .18s ease}' +
+      '.tf-item:hover{border-color:var(--borda2,#2B3C74);background:var(--card2,#131E45)}' +
+      '.tf-item input[type=checkbox]{width:18px;height:18px;margin-top:2px;accent-color:var(--azul,#2E6BFF);cursor:pointer;flex:0 0 auto}' +
+      '.tf-item input[type=checkbox]:focus-visible{outline:2px solid var(--azul-claro,#6098FF);outline-offset:2px}' +
       '.tf-corpo{flex:1 1 auto;min-width:0}' +
-      '.tf-titulo{color:#e2e8f0;font-size:14px;line-height:1.35;word-wrap:break-word;overflow-wrap:break-word}' +
-      '.tf-nota{color:#94a3b8;font-size:12px;margin-top:2px;word-wrap:break-word;overflow-wrap:break-word}' +
-      '.tf-item-feito .tf-titulo{text-decoration:line-through;color:#94a3b8}' +
-      '.tf-badge{flex:0 0 auto;font-size:11px;line-height:1;padding:4px 8px;border-radius:999px;white-space:nowrap;margin-top:3px}' +
-      '.tf-badge-hoje{color:#eab308;background:rgba(234,179,8,.12);border:1px solid rgba(234,179,8,.35)}' +
-      '.tf-badge-atrasada{color:#ef4444;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.35)}' +
-      '.tf-badge-futura{color:#94a3b8;background:rgba(148,163,184,.1);border:1px solid #0e2c5e}' +
-      '.tf-excluir{flex:0 0 auto;background:none;border:none;color:#94a3b8;font-size:18px;line-height:1;cursor:pointer;padding:2px 6px;border-radius:6px}' +
-      '.tf-excluir:hover{color:#ef4444;background:rgba(239,68,68,.1)}' +
-      '.tf-vazio{color:#94a3b8;text-align:center;padding:28px 12px;font-size:14px}' +
-      '.tf-sec-concluidas{margin-top:16px}' +
-      '.tf-toggle-concluidas{background:none;border:none;color:#94a3b8;font-size:13px;cursor:pointer;padding:6px 2px;display:flex;align-items:center;gap:6px}' +
-      '.tf-toggle-concluidas:hover{color:#e2e8f0}' +
-      '.tf-seta{display:inline-block;font-size:10px}' +
+      '.tf-titulo{color:var(--texto,#F1F5FF);font-size:14px;line-height:1.35;word-wrap:break-word;overflow-wrap:break-word}' +
+      '.tf-nota{color:var(--texto2,#9AAAD0);font-size:12px;margin-top:2px;word-wrap:break-word;overflow-wrap:break-word}' +
+      '.tf-item-feito{opacity:.6}' +
+      '.tf-item-feito .tf-titulo{text-decoration:line-through;color:var(--texto2,#9AAAD0)}' +
+      '.tf-badge{flex:0 0 auto;font-size:11px;line-height:1;padding:5px 9px;border-radius:999px;white-space:nowrap;margin-top:3px;font-weight:600;letter-spacing:.02em}' +
+      '.tf-badge-hoje{color:var(--amarelo,#F5B301);background:rgba(245,179,1,.12);border:1px solid rgba(245,179,1,.35)}' +
+      '.tf-badge-atrasada{color:var(--vermelho-claro,#FF4767);background:rgba(225,29,60,.12);border:1px solid rgba(225,29,60,.38)}' +
+      '.tf-badge-futura{color:var(--texto2,#9AAAD0);background:var(--bg2,#0A1230);border:1px solid var(--borda,#1E2B5A);font-weight:500}' +
+      '.tf-excluir{flex:0 0 auto;background:none;border:none;color:var(--cinza,#5C6B95);font-size:18px;line-height:1;cursor:pointer;padding:2px 7px;border-radius:10px;transition:color .18s ease,background-color .18s ease}' +
+      '.tf-excluir:hover{color:var(--vermelho-claro,#FF4767);background:rgba(225,29,60,.12)}' +
+      '.tf-excluir:focus-visible{outline:2px solid var(--azul-claro,#6098FF);outline-offset:2px}' +
+      '.tf-vazio{color:var(--texto2,#9AAAD0);text-align:center;padding:28px 12px;font-size:14px}' +
+      '.tf-sec-concluidas{margin-top:16px;border-top:1px solid var(--borda,#1E2B5A);padding-top:8px}' +
+      '.tf-toggle-concluidas{background:none;border:none;color:var(--texto2,#9AAAD0);font-size:13px;cursor:pointer;padding:6px 2px;display:flex;align-items:center;gap:6px;border-radius:10px;transition:color .18s ease}' +
+      '.tf-toggle-concluidas:hover{color:var(--texto,#F1F5FF)}' +
+      '.tf-toggle-concluidas:focus-visible{outline:2px solid var(--azul-claro,#6098FF);outline-offset:2px}' +
+      '.tf-seta{display:inline-block;font-size:10px;color:var(--azul-claro,#6098FF)}' +
       '@media (min-width:640px){.tf-form input[type=text]{flex-basis:260px}}';
     document.head.appendChild(style);
   }
