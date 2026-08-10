@@ -198,7 +198,7 @@
     return {
       id: String(pega(p, 'id', 'ig_id', 'idPost') || ('post-' + i)),
       tipo: rotuloTipo(p),
-      miniatura: urlSegura(pega(p, 'miniatura', 'thumbnail', 'thumbnail_url', 'thumbnailUrl', 'imagem', 'imagemUrl', 'media_url', 'mediaUrl')),
+      miniatura: urlSegura(pega(p, 'thumb', 'miniatura', 'thumbnail', 'thumbnail_url', 'thumbnailUrl', 'imagem', 'imagemUrl', 'media_url', 'mediaUrl')),
       permalink: urlSegura(pega(p, 'permalink', 'link', 'urlPost')),
       legenda: String(pega(p, 'legenda', 'caption', 'texto', 'descricao') || ''),
       curtidas: num(pega(p, 'curtidas', 'like_count', 'likeCount', 'likes')),
@@ -321,7 +321,7 @@
     var letra = (perfil && (perfil.usuario || perfil.nome) || '@').charAt(0).toUpperCase();
     var inner;
     if (perfil && perfil.foto) {
-      inner = '<img src="' + esc(perfil.foto) + '" alt="Foto do perfil" loading="lazy" ' +
+      inner = '<img src="' + esc(perfil.foto) + '" alt="Foto do perfil" loading="lazy" referrerpolicy="no-referrer" ' +
         'data-fallback="avatar" data-letra="' + esc(letra) + '">';
     } else {
       inner = '<span class="ig-avatar-letra">' + esc(letra) + '</span>';
@@ -401,7 +401,7 @@
     }
 
     var thumb = p.miniatura
-      ? '<img src="' + esc(p.miniatura) + '" alt="" loading="lazy" data-fallback="thumb">'
+      ? '<img src="' + esc(p.miniatura) + '" alt="" loading="lazy" referrerpolicy="no-referrer" data-fallback="thumb">'
       : '<div class="ig-sem-img">sem prévia</div>';
 
     var legenda = p.legenda
