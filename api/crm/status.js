@@ -67,22 +67,13 @@ async function checarIa(){
 
 async function checarInstagram(){
   try {
-    const r = await fetch(GRAPH + '/' + IG_USER + '?fields=username,followers_count,media_count', {
-      headers: { 'Authorization': 'Bearer ' + process.env.ADS_TOKEN }
-    });
+    if (!process.env.IG_TOKEN) return { ok: false, detalhe: 'Token do Instagram não configurado.' };
+    const base = 'https://graph.instagram.com/v21.0/me';
+    const tk = '&access_token=' + encodeURIComponent(process.env.IG_TOKEN);
+    const r = await fetch(base + '?fields=username,followers_count,media_count' + tk);
     const d = await r.json();
     if (!r.ok || !d.username) {
       return { ok: false, detalhe: (d && d.error && d.error.message) || ('erro HTTP ' + r.status) };
-    }
-    // perfil acessível; confirma se os posts também estão liberados
-    const m = await fetch(GRAPH + '/' + IG_USER + '/media?fields=id&limit=1', {
-      headers: { 'Authorization': 'Bearer ' + process.env.ADS_TOKEN }
-    });
-    if (!m.ok) {
-      return {
-        ok: false,
-        detalhe: '@' + d.username + ' vinculado, mas sem permissão para ler os posts — falta instagram_basic e instagram_manage_insights no token.'
-      };
     }
     return { ok: true, detalhe: '@' + d.username + ' — ' + (d.followers_count || 0) + ' seguidores, ' + (d.media_count || 0) + ' posts' };
   } catch (e) {

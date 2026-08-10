@@ -15,8 +15,9 @@
 //
 // Variáveis de ambiente: ADS_TOKEN, PANEL_KEY, CRM_PREFIX, BLOB_READ_WRITE_TOKEN
 
-const GRAPH = 'https://graph.facebook.com/v21.0';
-const IG_ID = '17841464695351184';        // conta Instagram Business @nicolastassooficial
+// Instagram API com login do Instagram: base própria e o token identifica a conta (/me).
+const GRAPH = 'https://graph.instagram.com/v21.0';
+const IG_ID = 'me';                       // conta @nicolastassooficial (dona do IG_TOKEN)
 const CACHE_MS = 900000;                  // 15 minutos
 const MAX_POSTS = 50;                     // posts buscados na listagem
 const MAX_METRICAS = 25;                  // posts que recebem chamada de /insights
@@ -30,9 +31,8 @@ async function blobGet(path){ const bs = await blobList(path); if(!bs.length) re
 
 // ---- helper da Graph API (propaga o código do erro para detectar falta de permissão) ----
 async function graphGet(pathAndQuery) {
-  const r = await fetch(GRAPH + pathAndQuery, {
-    headers: { 'Authorization': 'Bearer ' + process.env.ADS_TOKEN }
-  });
+  const sep = pathAndQuery.indexOf('?') === -1 ? '?' : '&';
+  const r = await fetch(GRAPH + pathAndQuery + sep + 'access_token=' + encodeURIComponent(process.env.IG_TOKEN || ''));
   const d = await r.json().catch(() => null);
   if (!r.ok || !d || d.error) {
     const err = (d && d.error) || {};
