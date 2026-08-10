@@ -1289,8 +1289,20 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
         ['nome','whatsapp','negocio','canal','faturamento','mensagem'].forEach(function(k){ sd.append(k, (data.get(k)||'').toString()); });
         var u = window.LEAD_UTM || {};
         Object.keys(u).forEach(function(k){ sd.append(k, u[k]); });
-        sd.append('origem', u.utm_campaign ? (u.utm_campaign+' | '+(u.utm_content||'')) : (u.fbclid ? 'meta (fbclid)' : 'organico/direto'));
+        var origemLead = u.utm_campaign ? (u.utm_campaign+' | '+(u.utm_content||'')) : (u.fbclid ? 'meta (fbclid)' : 'organico/direto');
+        sd.append('origem', origemLead);
         fetch(SHEETS_URL, {method:'POST', mode:'no-cors', body: sd, keepalive: true});
+
+        // registra no CRM na hora — o lead segue pro WhatsApp pessoal do Nicolas,
+        // que o robo nao monitora, entao esta e a unica via que o painel enxerga
+        fetch('/api/crm/lead', {
+          method:'POST', headers:{'content-type':'application/json'}, keepalive: true,
+          body: JSON.stringify({
+            nome: nome, whatsapp: whats, negocio: negocio, canal: canal,
+            faturamento: fat, mensagem: mensagem, origem: origemLead,
+            utm_source: u.utm_source || '', utm_campaign: u.utm_campaign || '', utm_content: u.utm_content || ''
+          })
+        }).catch(function(){});
       }catch(err){ /* planilha indisponivel nao impede o lead */ }
 
       // mensagem pré-pronta pro WhatsApp
@@ -1445,8 +1457,15 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
         sd.append('negocio',empresa);sd.append('canal',canal);sd.append('mensagem','[via botão flutuante]');
         var u=window.LEAD_UTM||{};
         Object.keys(u).forEach(function(k){sd.append(k,u[k]);});
-        sd.append('origem', u.utm_campaign ? (u.utm_campaign+' | '+(u.utm_content||'')) : (u.fbclid ? 'meta (fbclid)' : 'organico/direto'));
+        var origemLead = u.utm_campaign ? (u.utm_campaign+' | '+(u.utm_content||'')) : (u.fbclid ? 'meta (fbclid)' : 'organico/direto');
+        sd.append('origem', origemLead);
         fetch(SHEETS,{method:'POST',mode:'no-cors',body:sd,keepalive:true});
+        fetch('/api/crm/lead',{
+          method:'POST', headers:{'content-type':'application/json'}, keepalive:true,
+          body: JSON.stringify({nome:nome, whatsapp:whats, negocio:empresa, canal:canal,
+            faturamento:fat, mensagem:'[via botão flutuante]', origem:origemLead,
+            utm_source:u.utm_source||'', utm_campaign:u.utm_campaign||'', utm_content:u.utm_content||''})
+        }).catch(function(){});
       }catch(err){}
       if(typeof fbq==='function'){fbq('track','Lead');fbq('track','Contact');}
       const texto='Olá Nicolas! Vim pelo seu site.%0A%0A'+

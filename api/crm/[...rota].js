@@ -17,6 +17,7 @@ const rotas = {
   'ig-refresh': require('../../lib/crm/ig-refresh'),
   insights: require('../../lib/crm/insights'),
   instagram: require('../../lib/crm/instagram'),
+  lead: require('../../lib/crm/lead'),
   leads: require('../../lib/crm/leads'),
   notificacoes: require('../../lib/crm/notificacoes'),
   snapshot: require('../../lib/crm/snapshot'),
