@@ -29,7 +29,7 @@
    versão em CACHE_NOME — o activate apaga os caches antigos da Harpy.
    ========================================================================= */
 
-var CACHE_NOME = 'harpy-v1';
+var CACHE_NOME = 'harpy-v2';
 var PREFIXO_CACHE = 'harpy-';
 
 /* casca do aplicativo — pré-carregada na instalação */
@@ -42,6 +42,7 @@ var CASCA = [
   '/crm-ui/historico.js',
   '/crm-ui/atividade.js',
   '/crm-ui/assistente.js',
+  '/crm-ui/instalar.js',
   '/manifest.webmanifest',
   '/icone-harpy.svg'
 ];
