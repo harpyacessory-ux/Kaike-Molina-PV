@@ -32,6 +32,11 @@ const MAX_TOKENS = 300;
 let tokenMod = null;
 try { tokenMod = require('../lib/ig-token'); } catch (e) { tokenMod = null; }
 
+// Notificações proativas do painel (módulo opcional). Se o arquivo não existir ou quebrar,
+// o robô continua atendendo normalmente — avisar o operador nunca pode custar a resposta ao lead.
+let notificacoes = null;
+try { notificacoes = require('../lib/notificar'); } catch (e) { notificacoes = null; }
+
 const SYSTEM_BASE = `Você é o assistente virtual da equipe do Nicolas Tasso — consultoria de marketing e marketplaces (nicolastasso.site). Você atende o público pelo Instagram (@nicolastassooficial) em português do Brasil.
 
 SOBRE O NEGÓCIO
@@ -238,8 +243,10 @@ async function tratarDirect(evento) {
 
   chat.turns.push({ role: 'assistant', content: resposta });
   chat.full.push({ role: 'assistant', content: resposta, t: Date.now() });
+  const statusAnterior = chat.status; // guardado ANTES da reavaliação, para notificar só na virada
   if (/humano|atendente|pessoa de verdade/i.test(texto) || /especialista|assumir|equipe (vai|entra)/i.test(resposta)) chat.status = 'qualificado';
   else if (!chat.status) chat.status = 'em_conversa';
+  const virouQualificado = chat.status === 'qualificado' && statusAnterior !== 'qualificado';
   chats.set(sender, chat);
   if (chats.size > 500) chats.clear();
 
@@ -262,6 +269,20 @@ async function tratarDirect(evento) {
     await blobPut('meta/activity.json', { t: agora, ultimo: leadId });
   } catch (e) { console.error('blob persist fail:', e && e.message); }
 
+  // aviso no painel APENAS na transição para qualificado (não a cada mensagem).
+  // Sem WhatsApp aqui de propósito: o aviso é do robô, e o número humano não deve receber
+  // notificação a cada troca. O painel é a garantia.
+  if (virouQualificado && notificacoes) {
+    try {
+      await notificacoes.registrar(
+        'lead',
+        'Lead qualificado: ' + (apelido ? '@' + apelido : leadId),
+        resumoConversa(chat.full, 'Instagram (direct)', leadId),
+        { whatsapp: false }
+      );
+    } catch (e) { console.error('notificar lead fail:', e && e.message); }
+  }
+
   console.log(JSON.stringify({ canal: 'instagram', tipo: 'direct', lead: leadId, nome: apelido, msg: texto, resposta: resposta }));
 }
 
@@ -274,6 +295,17 @@ async function enviarDirect(recipientId, texto) {
     body: JSON.stringify({ recipient: { id: recipientId }, message: { text: texto } })
   });
   if (!r.ok) console.error('instagram send fail:', r.status, await r.text());
+}
+
+// resumo curto das últimas trocas — vira o detalhe da notificação de lead qualificado
+function resumoConversa(turns, canal, id) {
+  const ultimos = (Array.isArray(turns) ? turns : []).slice(-6);
+  const linhas = ultimos.map(function (t) {
+    const quem = t && t.role === 'assistant' ? 'Robô' : 'Lead';
+    const c = String((t && t.content) || '').replace(/\s+/g, ' ').trim();
+    return quem + ': ' + (c.length > 160 ? c.slice(0, 159) + '…' : c);
+  });
+  return 'Canal: ' + canal + ' (' + id + ')\n\nÚltimas mensagens:\n' + (linhas.join('\n') || '(sem histórico)');
 }
 
 // ------------------------------------------------------------------- Claude

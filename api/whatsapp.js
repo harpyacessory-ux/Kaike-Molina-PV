@@ -13,6 +13,11 @@
 const GRAPH = 'https://graph.facebook.com/v21.0';
 const MODEL = 'claude-haiku-4-5-20251001';
 
+// Notificações proativas do painel (módulo opcional). Se o arquivo não existir ou quebrar,
+// o robô continua atendendo normalmente — avisar o operador nunca pode custar a resposta ao lead.
+let notificacoes = null;
+try { notificacoes = require('../lib/notificar'); } catch (e) { notificacoes = null; }
+
 const SYSTEM = `Você é o assistente virtual da equipe do Nicolas Tasso — consultoria de marketing e marketplaces (nicolastasso.site). Você atende leads pelo WhatsApp em português do Brasil.
 
 SOBRE O NEGÓCIO
@@ -101,8 +106,10 @@ module.exports = async (req, res) => {
     const resposta = await claude(chat.turns, nome);
     chat.turns.push({ role: 'assistant', content: resposta });
     chat.full.push({ role: 'assistant', content: resposta, t: Date.now() });
+    const statusAnterior = chat.status; // guardado ANTES da reavaliação, para notificar só na virada
     if (/humano|atendente|pessoa de verdade/i.test(texto) || /especialista|assumir|equipe (vai|entra)/i.test(resposta)) chat.status = 'qualificado';
     else if (!chat.status) chat.status = 'em_conversa';
+    const virouQualificado = chat.status === 'qualificado' && statusAnterior !== 'qualificado';
     chats.set(from, chat);
     if (chats.size > 500) chats.clear();
 
@@ -124,6 +131,20 @@ module.exports = async (req, res) => {
       await blobPut('meta/activity.json', { t: agora, ultimo: from });
     } catch (e) { console.error('blob persist fail:', e && e.message); }
 
+    // aviso no painel APENAS na transição para qualificado (não a cada mensagem).
+    // Sem WhatsApp aqui de propósito: o número humano é o mesmo canal do robô e receberia
+    // aviso do próprio fluxo em loop. O painel é a garantia.
+    if (virouQualificado && notificacoes) {
+      try {
+        await notificacoes.registrar(
+          'lead',
+          'Lead qualificado: ' + (nome || chat.nome || from),
+          resumoConversa(chat.full, 'WhatsApp', from),
+          { whatsapp: false }
+        );
+      } catch (e) { console.error('notificar lead fail:', e && e.message); }
+    }
+
     console.log(JSON.stringify({ lead: from, nome, msg: texto, resposta }));
     return res.status(200).json({ ok: true });
   } catch (e) {
@@ -132,6 +153,17 @@ module.exports = async (req, res) => {
     return res.status(200).json({ ok: false });
   }
 };
+
+// resumo curto das últimas trocas — vira o detalhe da notificação de lead qualificado
+function resumoConversa(turns, canal, id) {
+  const ultimos = (Array.isArray(turns) ? turns : []).slice(-6);
+  const linhas = ultimos.map(function (t) {
+    const quem = t && t.role === 'assistant' ? 'Robô' : 'Lead';
+    const c = String((t && t.content) || '').replace(/\s+/g, ' ').trim();
+    return quem + ': ' + (c.length > 160 ? c.slice(0, 159) + '…' : c);
+  });
+  return 'Canal: ' + canal + ' (' + id + ')\n\nÚltimas mensagens:\n' + (linhas.join('\n') || '(sem histórico)');
+}
 
 async function claude(turns, nome) {
   const r = await fetch('https://api.anthropic.com/v1/messages', {

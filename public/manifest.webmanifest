@@ -1,0 +1,59 @@
+{
+  "name": "CRM Harpy",
+  "short_name": "Harpy",
+  "description": "Painel da Harpy: campanha, leads, funil, tarefas e Instagram do Nicolas Tasso em um só lugar.",
+  "id": "/painel",
+  "start_url": "/painel",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#060B1F",
+  "theme_color": "#060B1F",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "categories": ["business", "productivity", "marketing"],
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/icone-harpy.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icone-harpy-maskable.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Campanha",
+      "short_name": "Campanha",
+      "description": "Números do conjunto consolidado: gasto, CPL e leads do dia",
+      "url": "/painel",
+      "icons": [
+        { "src": "/icone-harpy.svg", "sizes": "512x512", "type": "image/svg+xml" }
+      ]
+    },
+    {
+      "name": "Leads",
+      "short_name": "Leads",
+      "description": "Lista de leads recebidos e o que fazer com cada um",
+      "url": "/painel",
+      "icons": [
+        { "src": "/icone-harpy.svg", "sizes": "512x512", "type": "image/svg+xml" }
+      ]
+    },
+    {
+      "name": "Instagram",
+      "short_name": "Instagram",
+      "description": "Desempenho do perfil e dos posts no Instagram",
+      "url": "/painel",
+      "icons": [
+        { "src": "/icone-harpy.svg", "sizes": "512x512", "type": "image/svg+xml" }
+      ]
+    }
+  ]
+}

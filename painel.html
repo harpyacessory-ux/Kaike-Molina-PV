@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>CRM Harpy — Nicolas Tasso</title>
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#060B1F">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="CRM Harpy">
+<link rel="icon" type="image/svg+xml" href="/icone-harpy.svg">
+<link rel="apple-touch-icon" href="/icone-harpy.svg">
 <link rel="icon" href="/favicon.svg">
 <style>
   /* =========================================================
@@ -486,6 +493,8 @@
     <button class="aba-btn" data-tab="contatos">Contatos</button>
     <button class="aba-btn" data-tab="tarefas">Tarefas</button>
     <button class="aba-btn" data-tab="instagram">Instagram</button>
+    <button class="aba-btn" data-tab="historico">Histórico</button>
+    <button class="aba-btn" data-tab="atividade">Atividade</button>
     <button class="aba-btn" data-tab="robo">Robô</button>
   </nav>
 </header>
@@ -499,6 +508,8 @@
   <section class="tab" id="tab-contatos"><div id="contatosConteudo"></div></section>
   <section class="tab" id="tab-tarefas"><div id="tarefasConteudo"></div></section>
   <section class="tab" id="tab-instagram"><div id="instagramConteudo"></div></section>
+  <section class="tab" id="tab-historico"><div id="historicoConteudo"></div></section>
+  <section class="tab" id="tab-atividade"><div id="atividadeConteudo"></div></section>
 </main>
 
 <script>
@@ -511,7 +522,7 @@
   var abaAtiva = 'visao';
   var dadosInsights = null, dadosStatus = null, dadosLeads = null;
   var leadSelecionado = null;
-  var carregouAba = { visao:false, recs:false, leads:false, robo:false, funil:false, contatos:false, tarefas:false, instagram:false };
+  var carregouAba = { visao:false, recs:false, leads:false, robo:false, funil:false, contatos:false, tarefas:false, instagram:false, historico:false, atividade:false };
 
   var $ = function(id){ return document.getElementById(id); };
 
@@ -623,7 +634,7 @@
     try{ localStorage.removeItem('panel_key'); }catch(e){}
     dadosInsights = dadosStatus = dadosLeads = null;
     leadSelecionado = null;
-    carregouAba = { visao:false, recs:false, leads:false, robo:false, funil:false, contatos:false, tarefas:false, instagram:false };
+    carregouAba = { visao:false, recs:false, leads:false, robo:false, funil:false, contatos:false, tarefas:false, instagram:false, historico:false, atividade:false };
     setDot(null);
     mostrarLogin(msgErro || '');
   }
@@ -1210,6 +1221,16 @@
 <script src="/crm-ui/contatos.js"></script>
 <script src="/crm-ui/tarefas.js"></script>
 <script src="/crm-ui/instagram.js"></script>
+<script src="/crm-ui/historico.js"></script>
+<script src="/crm-ui/atividade.js"></script>
 <script src="/crm-ui/assistente.js"></script>
+<script>
+  /* aplicativo instalável: registra o service worker (falha silenciosa em navegador sem suporte) */
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('/sw.js').catch(function () {});
+    });
+  }
+</script>
 </body>
 </html>
