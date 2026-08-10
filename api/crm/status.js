@@ -2,6 +2,8 @@
 // GET /api/crm/status
 // Auth: header 'x-panel-key' === process.env.PANEL_KEY
 
+const { lerToken, lerRegistro, diasRestantes } = require('../../lib/ig-token');
+
 const GRAPH = 'https://graph.facebook.com/v21.0';
 const ACCOUNT = 'act_1952702155392886';
 const IG_USER = '17841464695351184';
@@ -67,15 +69,21 @@ async function checarIa(){
 
 async function checarInstagram(){
   try {
-    if (!process.env.IG_TOKEN) return { ok: false, detalhe: 'Token do Instagram não configurado.' };
+    // token vigente + registro da renovação numa só ida ao blob (em paralelo)
+    const [token, reg] = await Promise.all([lerToken(), lerRegistro()]);
+    if (!token) return { ok: false, detalhe: 'Token do Instagram não configurado.' };
     const base = 'https://graph.instagram.com/v21.0/me';
-    const tk = '&access_token=' + encodeURIComponent(process.env.IG_TOKEN);
+    const tk = '&access_token=' + encodeURIComponent(token);
     const r = await fetch(base + '?fields=username,followers_count,media_count' + tk);
     const d = await r.json();
     if (!r.ok || !d.username) {
       return { ok: false, detalhe: (d && d.error && d.error.message) || ('erro HTTP ' + r.status) };
     }
-    return { ok: true, detalhe: '@' + d.username + ' — ' + (d.followers_count || 0) + ' seguidores, ' + (d.media_count || 0) + ' posts' };
+    let detalhe = '@' + d.username + ' — ' + (d.followers_count || 0) + ' seguidores, ' + (d.media_count || 0) + ' posts';
+    // quando o token já foi renovado ao menos uma vez, mostramos quanto tempo ele ainda tem
+    const dias = reg ? diasRestantes(reg.expiraEm) : null;
+    if (dias !== null) detalhe += ' · token renova sozinho (' + dias + ' dias)';
+    return { ok: true, detalhe };
   } catch (e) {
     return { ok: false, detalhe: e.message };
   }

@@ -1,5 +1,8 @@
 {
   "cleanUrls": true,
+  "crons": [
+    { "path": "/api/crm/ig-refresh", "schedule": "0 9 * * *" }
+  ],
   "headers": [
     {
       "source": "/(.*)\\.(webp|png|jpg|jpeg|svg|ico)",

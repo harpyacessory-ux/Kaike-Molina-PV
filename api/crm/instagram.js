@@ -14,6 +14,12 @@
 // (Por isso a resposta degradada nunca é cacheada.)
 //
 // Variáveis de ambiente: ADS_TOKEN, PANEL_KEY, CRM_PREFIX, BLOB_READ_WRITE_TOKEN
+//
+// TOKEN: não usa mais process.env.IG_TOKEN direto — lerToken() devolve o token vigente
+// (o renovado no blob quando existir, senão a env). Depois de responder, o handler dispara
+// renovarSePreciso(false) em segundo plano, para o token nunca chegar perto de expirar.
+
+const { lerToken, renovarSePreciso } = require('../../lib/ig-token');
 
 // Instagram API com login do Instagram: base própria e o token identifica a conta (/me).
 const GRAPH = 'https://graph.instagram.com/v21.0';
@@ -30,9 +36,12 @@ async function blobList(prefix){ const r = await fetch('https://blob.vercel-stor
 async function blobGet(path){ const bs = await blobList(path); if(!bs.length) return null; try{ const r = await fetch(bs[0].url + '?t=' + Date.now(), {cache:'no-store'}); if(!r.ok) return null; return await r.json(); }catch(e){ return null; } }
 
 // ---- helper da Graph API (propaga o código do erro para detectar falta de permissão) ----
+// TOKEN é preenchido uma única vez no começo do handler (lerToken) e usado por todas as
+// chamadas da invocação; a env fica como último recurso.
+let TOKEN = '';
 async function graphGet(pathAndQuery) {
   const sep = pathAndQuery.indexOf('?') === -1 ? '?' : '&';
-  const r = await fetch(GRAPH + pathAndQuery + sep + 'access_token=' + encodeURIComponent(process.env.IG_TOKEN || ''));
+  const r = await fetch(GRAPH + pathAndQuery + sep + 'access_token=' + encodeURIComponent(TOKEN || process.env.IG_TOKEN || ''));
   const d = await r.json().catch(() => null);
   if (!r.ok || !d || d.error) {
     const err = (d && d.error) || {};
@@ -154,6 +163,10 @@ module.exports = async (req, res) => {
       }
     }
 
+    // ---- token vigente: uma leitura por invocação, usada por todas as chamadas ----
+    // (fica depois do cache para a resposta cacheada não pagar por uma leitura de blob)
+    TOKEN = await lerToken();
+
     // ---- perfil (já funciona com o token atual) ----
     let perfil = null, perfilErro = null;
     try {
@@ -235,7 +248,12 @@ module.exports = async (req, res) => {
 
     try { await blobPut('meta/instagram-cache.json', { t: Date.now(), body }); } catch (e) { /* cache é melhor-esforço */ }
 
-    return res.status(200).json(Object.assign({}, body, { cacheado: false }));
+    res.status(200).json(Object.assign({}, body, { cacheado: false }));
+
+    // renovação em segundo plano: só age se o token guardado já passou de 7 dias.
+    // Sem await e com .catch — jamais atrasa ou quebra a resposta já enviada.
+    renovarSePreciso(false).catch(() => {});
+    return;
   } catch (e) {
     console.error('instagram erro:', e.message);
     return res.status(500).json({ error: 'erro ao consultar o Instagram', detalhe: e.message });
