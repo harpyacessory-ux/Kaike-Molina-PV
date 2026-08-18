@@ -1315,8 +1315,15 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
         }
       }catch(err){ /* mesmo se o e-mail falhar, seguimos pro WhatsApp */ }
 
-      // registra conversao Lead + Contact no Meta Pixel
-      if(typeof fbq === 'function'){ fbq('track', 'Lead'); fbq('track', 'Contact'); }
+      // registra conversao Lead + Contact no Meta Pixel.
+      // LeadQualificado dispara só quando o lead indica que JÁ vende — é o evento
+      // que a campanha vai otimizar no próximo ciclo (Meta aprende a buscar vendedor, não curioso)
+      if(typeof fbq === 'function'){
+        fbq('track', 'Lead'); fbq('track', 'Contact');
+        if(fat && fat !== 'Começando do zero' && canal !== 'Ainda não vendo'){
+          fbq('trackCustom', 'LeadQualificado', {faturamento: fat, canal: canal || 'nao informado'});
+        }
+      }
 
       // 2) navega pro WhatsApp na mesma aba — imune a bloqueio de pop-up nos navegadores internos (Instagram/iOS)
       showMsg('Tudo certo! Abrindo o WhatsApp para finalizar o contato...', true);
@@ -1448,7 +1455,11 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
             utm_source:u.utm_source||'', utm_campaign:u.utm_campaign||'', utm_content:u.utm_content||''})
         }).catch(function(){});
       }catch(err){}
-      if(typeof fbq==='function'){fbq('track','Lead');fbq('track','Contact');}
+      if(typeof fbq==='function'){
+        fbq('track','Lead');fbq('track','Contact');
+        // mesma regra de qualificação do formulário principal
+        if(fat && fat!=='Começando do zero' && canal!=='Ainda não vendo'){fbq('trackCustom','LeadQualificado',{faturamento:fat, canal:canal||'nao informado'});}
+      }
       const texto='Olá Nicolas! Vim pelo seu site.%0A%0A'+
         '*Nome:* '+nome+'%0A*WhatsApp:* '+whats+'%0A*Empresa:* '+empresa+
         '%0A*Onde vendo:* '+canal+'%0A*Faturamento:* '+fat+
