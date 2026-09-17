@@ -44,7 +44,7 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
-<link rel="preload" as="image" media="(min-width:901px)" imagesrcset="/nicolas-sm.webp 840w, /nicolas.webp 1120w" imagesizes="(max-width:900px) 78vw, 560px" fetchpriority="high">
+<link rel="preload" as="image" imagesrcset="/hero-aquila-820.jpg 820w, /hero-aquila.jpg 1400w" imagesizes="(max-width:920px) 100vw, 60vw" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://connect.facebook.net" crossorigin>
 <noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
@@ -137,6 +137,75 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
 
   /* ---------- HERO ---------- */
   .hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;padding-top:130px}
+
+  /* ---------- HERO AQUILA (banner em HTML: texto, botões, selos e card reais; só a foto é imagem) ---------- */
+  .aq{position:relative;overflow:hidden;padding-top:73px;
+    background:radial-gradient(ellipse 60% 55% at 8% 105%,rgba(40,95,255,.32),transparent 70%),linear-gradient(115deg,#040920 0%,#07123d 52%,#0b2080 100%)}
+  .aq-wrap{position:relative;z-index:2;min-height:clamp(600px,52vw,860px);display:flex;align-items:center}
+  .aq-copy{max-width:min(600px,54%);padding:40px 0}
+  .aq h1{font-size:clamp(42px,5.4vw,86px);color:#fff;line-height:1.02;margin:0}
+  .aq-lead{font-size:clamp(16px,1.3vw,20.5px);color:#d9e1f2;line-height:1.55;margin:26px 0 0;max-width:560px}
+  .aq-actions{display:flex;flex-wrap:wrap;gap:16px;margin-top:38px}
+  .aq-btn{display:inline-flex;align-items:center;gap:10px;padding:15px 30px;border-radius:12px;font-weight:600;font-size:16px;color:#fff;
+    transition:transform .3s var(--ease),box-shadow .3s var(--ease),background-color .3s,border-color .3s}
+  .aq-btn svg{width:17px;height:17px;transition:transform .3s var(--ease)}
+  .aq-btn-p{background:#1a6dff;box-shadow:0 12px 34px rgba(26,109,255,.45)}
+  .aq-btn-p:hover{transform:translateY(-3px);box-shadow:0 20px 44px rgba(26,109,255,.6)}
+  .aq-btn-p:hover svg{transform:translateX(4px)}
+  .aq-btn-g{border:1.5px solid rgba(255,255,255,.75);background:rgba(5,12,40,.35)}
+  .aq-btn-g:hover{transform:translateY(-3px);border-color:#fff;background:rgba(255,255,255,.08)}
+  .aq-chips{list-style:none;display:flex;flex-wrap:wrap;gap:14px;margin:34px 0 0;padding:0}
+  .aq-chips li{display:flex;align-items:center;justify-content:center;height:70px;padding:0 20px;border-radius:14px;
+    background:linear-gradient(180deg,rgba(255,255,255,.11),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.24);
+    box-shadow:0 14px 34px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.12);backdrop-filter:blur(8px);transition:border-color .3s,box-shadow .3s}
+  .aq-chips li:hover{border-color:rgba(255,255,255,.55);box-shadow:0 18px 40px rgba(26,109,255,.35),inset 0 1px 0 rgba(255,255,255,.18)}
+  .aq-chips img{height:38px;width:auto;display:block}
+  .aq-photo{position:absolute;right:0;bottom:0;z-index:1;height:calc(100% - 73px);aspect-ratio:1602/1536;container-type:inline-size}
+  .aq-photo>img{width:100%;height:100%;display:block;object-fit:cover;
+    -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 24%);mask-image:linear-gradient(to right,transparent 0%,#000 24%)}
+  /* card posicionado exatamente sobre a área que foi limpa na foto */
+  .aq-card{position:absolute;left:2.2%;top:62.3%;width:max(35%,210px);min-height:30.9cqw;box-sizing:border-box;
+    display:flex;flex-direction:column;justify-content:space-between;gap:1.1cqw;padding:3cqw 2.8cqw;border-radius:max(12px,1.6cqw);color:#fff;
+    background:linear-gradient(160deg,rgba(46,68,150,.62),rgba(10,20,64,.78));border:1px solid rgba(255,255,255,.36);
+    box-shadow:0 24px 60px rgba(0,0,0,.45);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+  .aq-num{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(36px,7.4cqw,80px);line-height:1;letter-spacing:-.02em}
+  .aq-card p{margin:0;font-size:clamp(13px,2.15cqw,21px);line-height:1.3;color:#e6ecf8}
+  .aq-card-cta{display:flex;align-items:center;gap:8px;background:#1a6dff;border-radius:10px;padding:clamp(9px,1.4cqw,14px) clamp(13px,2cqw,20px);
+    font-weight:600;font-size:clamp(13px,2cqw,19px);transition:background-color .3s,box-shadow .3s}
+  .aq-card-cta svg{width:1em;height:1em;transition:transform .3s var(--ease)}
+  .aq-card:hover .aq-card-cta{background:#3a82ff;box-shadow:0 10px 26px rgba(26,109,255,.55)}
+  .aq-card:hover .aq-card-cta svg{transform:translateX(4px)}
+  /* efeito flutuante: cada elemento sobe e desce em ritmo levemente diferente */
+  @keyframes aqFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+  .aq-float{display:inline-block;animation:aqFloat 5s ease-in-out infinite}
+  .aq-chips li.aq-float{display:flex}
+  .aq-f1{animation-delay:0s}.aq-f2{animation-delay:-.9s}.aq-f3{animation-delay:-1.8s}.aq-f4{animation-delay:-2.6s}.aq-f5{animation-delay:-3.4s}
+  .aq-card{animation:aqFloat 6s ease-in-out infinite;animation-delay:-1.3s}
+  @media(prefers-reduced-motion:reduce){.aq-float,.aq-card{animation:none}}
+  .aq-chips li{height:62px;padding:0 17px}
+  .aq-chips img{height:32px}
+  /* notebooks: a foto encosta no texto — afasta a foto para a direita e estreita a coluna */
+  @media(min-width:921px) and (max-width:1300px){
+    .aq-photo{right:-7%}
+    .aq-copy{max-width:47%}
+    .aq-chips{gap:10px}
+    .aq-chips li{height:54px;padding:0 13px}
+    .aq-chips img{height:26px}
+  }
+  @media(max-width:920px){
+    .aq{padding-top:63px}
+    .aq-wrap{min-height:0;display:block}
+    .aq-copy{max-width:none;padding:34px 0 0}
+    .aq-actions{gap:12px;margin-top:28px}
+    .aq-actions .aq-float{flex:1 1 auto}
+    .aq-btn{width:100%;justify-content:center;padding:15px 18px}
+    .aq-chips{gap:10px;margin-top:22px}
+    .aq-chips li{flex:1 1 0;min-width:0;height:56px;padding:0 10px}
+    .aq-chips img{height:auto;max-height:28px;max-width:100%}
+    .aq-photo{position:relative;height:auto;width:100%;margin-top:22px}
+    .aq-photo>img{height:auto;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 16%);mask-image:linear-gradient(to bottom,transparent 0%,#000 16%)}
+    @keyframes aqFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+  }
   .hero-bg{position:absolute;inset:0;z-index:0}
   .glow{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55}
   .glow.a{width:620px;height:620px;background:radial-gradient(circle,#1f4fc0,transparent 70%);top:-180px;right:-120px;animation:floatA 16s var(--ease) infinite}
@@ -611,47 +680,31 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
 </nav>
 
 <!-- HERO -->
-<header class="hero" id="top">
-  <div class="hero-bg">
-    <div class="glow a"></div><div class="glow b"></div><div class="grid-tex"></div>
-    <div class="mkt-marquee" aria-hidden="true">
-      <div class="mkt-track">
-        <span>Mercado Livre</span><em>·</em><span>Shopee</span><em>·</em><span>Amazon</span><em>·</em>
-        <span>Mercado Livre</span><em>·</em><span>Shopee</span><em>·</em><span>Amazon</span><em>·</em>
-        <span>Mercado Livre</span><em>·</em><span>Shopee</span><em>·</em><span>Amazon</span><em>·</em>
+<header class="aq" id="top">
+  <div class="wrap aq-wrap">
+    <div class="aq-copy">
+      <h1 class="reveal">Venda mais nos marketplaces.</h1>
+      <p class="aq-lead reveal d1">Consultoria especializada em Mercado Livre, Shopee e Amazon com acompanhamento 24h e atenção total ao seu negócio. Estratégia, tráfego e otimização feitos sob medida para escalar as suas vendas.</p>
+      <div class="aq-actions reveal d2">
+        <span class="aq-float aq-f1"><a class="aq-btn aq-btn-p" href="#contato">Quero vender mais
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></span>
+        <span class="aq-float aq-f2"><a class="aq-btn aq-btn-g" href="#resultados">Ver resultados</a></span>
       </div>
+      <ul class="aq-chips reveal d3" aria-label="Marketplaces atendidos">
+        <li class="aq-float aq-f3"><img src="/logo-mercadolivre-w.png" width="349" height="96" alt="Mercado Livre"></li>
+        <li class="aq-float aq-f4"><img src="/logo-shopee-w.png" width="285" height="96" alt="Shopee"></li>
+        <li class="aq-float aq-f5"><img src="/logo-amazon-w.png" width="292" height="96" alt="Amazon"></li>
+      </ul>
     </div>
   </div>
-  <div class="wrap">
-   <div class="hero-grid">
-    <div class="hero-photo reveal">
-      <img src="/nicolas.webp" srcset="/nicolas-sm.webp 840w, /nicolas.webp 1120w" sizes="(max-width:900px) 78vw, 560px" width="1120" height="1120" alt="Nicolas Tasso — especialista em marketplaces" onerror="this.closest('.hero-grid').style.gridTemplateColumns='1fr';this.parentElement.style.display='none'">
-    </div>
-    <div class="hero-copy">
-    <p class="eyebrow reveal">Consultoria em Mercado Livre · Shopee · Amazon</p>
-      <h1 class="reveal d1">Venda mais nos<br><span class="l2">marketplaces.</span></h1>
-      <p class="role reveal d2">Consultoria especializada em <b>Mercado Livre</b>, <b>Shopee</b> e <b>Amazon</b> com <b>acompanhamento 24h</b> e atenção total ao seu negócio. Estratégia, tráfego e otimização feitos sob medida para <b>escalar as suas vendas</b>.</p>
-      <div class="hero-cta-row reveal d3">
-        <div class="hero-actions">
-          <a class="btn btn-p" href="#contato">Quero vender mais
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </a>
-          <a class="btn btn-g" href="#resultados">Ver resultados</a>
-        </div>
-        <div class="stats">
-          <a class="stat-solo" href="#resultados" aria-label="Ver cases e resultados">
-            <div class="num"><span class="accent">800</span>+</div>
-            <div class="stat-info">
-              <div class="lbl">Contas de marketplace gerenciadas</div>
-              <span class="stat-cta">Ver os cases
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-              </span>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-   </div>
+  <div class="aq-photo">
+    <img src="/hero-aquila.jpg" srcset="/hero-aquila-820.jpg 820w, /hero-aquila.jpg 1400w" sizes="(max-width:920px) 100vw, 60vw" width="1400" height="1342" alt="Consultor da Aquila Marketing Digital trabalhando no notebook" fetchpriority="high">
+    <a class="aq-card" href="#resultados" aria-label="Ver cases e resultados">
+      <div class="aq-num"><span class="accent">800</span>+</div>
+      <p>Contas de marketplace gerenciadas</p>
+      <span class="aq-card-cta">Ver os cases
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
   </div>
 </header>
 
@@ -1144,7 +1197,7 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
   // contador animado — SO em desktop com mouse e com IntersectionObserver disponivel;
   // no mobile o "800" do HTML nunca e tocado (nada de zerar e esperar animacao)
   if('IntersectionObserver' in window && matchMedia('(min-width:921px) and (hover:hover) and (pointer:fine)').matches){
-    document.querySelectorAll('.stat-solo .num .accent').forEach(el=>{
+    document.querySelectorAll('.stat-solo .num .accent, .aq-num .accent').forEach(el=>{
       const target=parseInt(el.textContent.replace(/\D/g,''),10);
       if(!target) return;
       new IntersectionObserver((es,obs)=>{
