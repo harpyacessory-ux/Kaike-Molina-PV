@@ -44,7 +44,7 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
-<link rel="preload" as="image" imagesrcset="/banner-aquila-960.jpg 960w, /banner-aquila.jpg 1920w" imagesizes="100vw" fetchpriority="high">
+<link rel="preload" as="image" media="(min-width:901px)" imagesrcset="/nicolas-sm.webp 840w, /nicolas.webp 1120w" imagesizes="(max-width:900px) 78vw, 560px" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://connect.facebook.net" crossorigin>
 <noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
@@ -136,16 +136,7 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
   }
 
   /* ---------- HERO ---------- */
-  /* banner de abertura: logo abaixo do menu fixo; recorta só a sobra de fundo em cima/embaixo */
-  .top-banner{position:relative;background:var(--navy-950);padding-top:73px;line-height:0}
-  .top-banner a{display:block}
-  .top-banner img{width:100%;height:auto;aspect-ratio:2.6/1;object-fit:cover;object-position:center 53%;display:block}
-  .hero{position:relative;display:flex;align-items:center;overflow:hidden;padding-top:90px;padding-bottom:90px}
-  @media(max-width:920px){
-    .top-banner{padding-top:63px}
-    .top-banner img{aspect-ratio:2.1/1}
-    .hero{padding-top:40px}
-  }
+  .hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;padding-top:130px}
   .hero-bg{position:absolute;inset:0;z-index:0}
   .glow{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55}
   .glow.a{width:620px;height:620px;background:radial-gradient(circle,#1f4fc0,transparent 70%);top:-180px;right:-120px;animation:floatA 16s var(--ease) infinite}
@@ -619,12 +610,50 @@ src="https://www.facebook.com/tr?id=1557904942445515&ev=PageView&noscript=1"
   </button>
 </nav>
 
-<!-- BANNER DE ABERTURA -->
-<section class="top-banner" id="top">
-  <a href="#contato-topo" aria-label="Potencialize suas vendas — receber análise gratuita">
-    <img src="/banner-aquila.jpg" srcset="/banner-aquila-960.jpg 960w, /banner-aquila.jpg 1920w" sizes="100vw" width="1920" height="1072" fetchpriority="high" alt="Aquila Marketing Digital — sua agência de consultoria para marketplaces: Mercado Livre, Shopee e Amazon. Potencialize suas vendas.">
-  </a>
-</section>
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="hero-bg">
+    <div class="glow a"></div><div class="glow b"></div><div class="grid-tex"></div>
+    <div class="mkt-marquee" aria-hidden="true">
+      <div class="mkt-track">
+        <span>Mercado Livre</span><em>·</em><span>Shopee</span><em>·</em><span>Amazon</span><em>·</em>
+        <span>Mercado Livre</span><em>·</em><span>Shopee</span><em>·</em><span>Amazon</span><em>·</em>
+        <span>Mercado Livre</span><em>·</em><span>Shopee</span><em>·</em><span>Amazon</span><em>·</em>
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+   <div class="hero-grid">
+    <div class="hero-photo reveal">
+      <img src="/nicolas.webp" srcset="/nicolas-sm.webp 840w, /nicolas.webp 1120w" sizes="(max-width:900px) 78vw, 560px" width="1120" height="1120" alt="Nicolas Tasso — especialista em marketplaces" onerror="this.closest('.hero-grid').style.gridTemplateColumns='1fr';this.parentElement.style.display='none'">
+    </div>
+    <div class="hero-copy">
+    <p class="eyebrow reveal">Consultoria em Mercado Livre · Shopee · Amazon</p>
+      <h1 class="reveal d1">Venda mais nos<br><span class="l2">marketplaces.</span></h1>
+      <p class="role reveal d2">Consultoria especializada em <b>Mercado Livre</b>, <b>Shopee</b> e <b>Amazon</b> com <b>acompanhamento 24h</b> e atenção total ao seu negócio. Estratégia, tráfego e otimização feitos sob medida para <b>escalar as suas vendas</b>.</p>
+      <div class="hero-cta-row reveal d3">
+        <div class="hero-actions">
+          <a class="btn btn-p" href="#contato">Quero vender mais
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="btn btn-g" href="#resultados">Ver resultados</a>
+        </div>
+        <div class="stats">
+          <a class="stat-solo" href="#resultados" aria-label="Ver cases e resultados">
+            <div class="num"><span class="accent">800</span>+</div>
+            <div class="stat-info">
+              <div class="lbl">Contas de marketplace gerenciadas</div>
+              <span class="stat-cta">Ver os cases
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+   </div>
+  </div>
+</header>
 
 <!-- FORMULARIO TOPO -->
 <section class="contact sec-pad" id="contato-topo" style="padding-top:70px;padding-bottom:70px">
